@@ -1,0 +1,14 @@
+Host github.com
+  ForwardX11 no
+  ForwardX11Trusted no
+Host gitlab.com
+  ForwardX11 no
+  ForwardX11Trusted no
+Host git.sr.ht
+  ForwardX11 no
+  ForwardX11Trusted no
+Host *
+  AddKeysToAgent yes
+  ForwardAgent yes
+  ForwardX11 yes
+  IdentityFile ~/.ssh/id_ed25519

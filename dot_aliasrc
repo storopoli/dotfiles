@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# sudo not required for some system commands
+for command in cryptsetup mount umount emerge pacman sv updatedb su shutdown poweroff reboot ; do
+	# shellcheck disable=2139
+	alias "$command=sudo $command"
+done; unset command
+
+# Verbosity and settings that you pretty much just always are going to want.
+alias \
+	ll="ls -lAh --group-directories-first" \
+	lm="ls -t -1" \
+	lt="ls --human-readable --size -1 -S --classify" \
+	ls='ls --color=auto' \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	less="less -R" \
+	du="du -ch" \
+	bc="bc -ql" \
+	mkd="mkdir -pv"
+
+# Nice shortcuts stuffs
+alias \
+	yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all" \
+	yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames --sponsorblock-remove all" \
+	ffmpeg="ffmpeg -hide_banner" \
+	myip="curl ipinfo.io/ip" \
+	ports="netstat -tulanp" \
+	untar="tar -zxvf" \
+	python="python3" \
+	vi="nvim" \
+	nano="nvim" \
+	vim="nvim"
+
+# Colorize commands when possible.
+alias \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi"
+
+# These common commands are just too long! Abbreviate them.
+# shellcheck disable=2139
+alias \
+	ka="killall" \
+	g="git" \
+	e="$EDITOR" \
+	v="$EDITOR" 
+
+# Julia
+alias jp='julia --project'
+alias pluto="julia -e 'using Pluto; Pluto.run();'"
+

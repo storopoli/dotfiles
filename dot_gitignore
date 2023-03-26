@@ -1,0 +1,7 @@
+# Vim/Emacs
+*~
+.*.swp
+# Mac
+.DS_Store
+# VSCode Workspace Folder
+.vscode/
