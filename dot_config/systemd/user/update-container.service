@@ -1,0 +1,9 @@
+[Unit]
+Description=Update alpine toolbox
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/podman pull ghcr.io/storopoli/edc:latest -q
+
+[Install]
+WantedBy=default.target

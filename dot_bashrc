@@ -1,0 +1,52 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+	for rc in ~/.bashrc.d/*; do
+		if [ -f "$rc" ]; then
+			. "$rc"
+		fi
+	done
+fi
+
+unset rc
+unset rc
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+EDITOR=/usr/bin/vi
+
+if [ "$PS1" ]; then
+   PS1="[\u@\h:\l \W]\\$ "
+fi
+
+alias locate=plocate
+
+# if running in a container
+if [ -f /run/.containerenv ]; then
+	eval "$(starship init bash)"
+	alias vi=vim
+	alias r=ranger
+	alias top=btop
+fi
+
+mesa=`flatpak info org.freedesktop.Platform.GL.default//22.08 | awk -F': ' '/Version/ {print $2}' | uniq`
+echo mesa: $mesa 
+kernel=`uname -r`
+echo $HOSTNAME: $kernel
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
