@@ -31,7 +31,9 @@ alias \
 	python="python3" \
 	vi="nvim" \
 	nano="nvim" \
-	vim="nvim"
+	vim="nvim" \
+	r="ranger" \
+	n="neofetch"
 
 # Colorize commands when possible.
 alias \
