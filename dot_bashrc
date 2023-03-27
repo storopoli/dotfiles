@@ -40,7 +40,7 @@ alias locate=plocate
 if [ -f /run/.containerenv ]; then
 	eval "$(starship init bash)"
 	alias vim=nvim
-	alias r=ranger
+	alias r='. ranger'
 	alias top=btop
 fi
 
