@@ -1,5 +1,6 @@
 return {
 	"akinsho/toggleterm.nvim",
+	version = "*",
 	config = function()
 		require("toggleterm").setup({
 			-- size can be a number or function which is passed the current terminal
@@ -19,7 +20,7 @@ return {
 			insert_mappings = true, -- whether or not the open mapping applies in insert mode
 			terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
 			persist_size = true,
-			direction = "horizontal", --'vertical' | 'horizontal' | 'window' | 'float',
+			direction = "float", --'vertical' | 'horizontal' | 'window' | 'float',
 			close_on_exit = true, -- close the terminal window when the process exits
 			shell = vim.o.shell, -- change the default shell
 			-- This field is only relevant if direction is set to 'float'
@@ -28,10 +29,10 @@ return {
 				-- see :h nvim_open_win for details on borders however
 				-- the 'curved' border is a custom border type
 				-- not natively supported but implemented in this plugin.
-				border = "curved", --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+				border = "rounded", --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
 				width = 80,
 				height = 20,
-				winblend = 3,
+				winblend = 10,
 				highlights = {
 					border = "Normal",
 					background = "Normal",
@@ -57,5 +58,8 @@ return {
 
 		-- if you only want these mappings for toggle term use term://*toggleterm#* instead
 		vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+		-- Get jobid easily
+		vim.keymap.set("n", "<leader>ti", [[<Cmd>echo b:terminal_job_id<CR>]], { desc = "Get terminal job [i]d" })
 	end,
 }

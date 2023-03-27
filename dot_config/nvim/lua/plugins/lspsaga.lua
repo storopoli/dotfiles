@@ -7,8 +7,6 @@ return {
 	},
 	config = function()
 		require("lspsaga").setup({})
-		--Switch theme again after lspsaga loaded from
-		vim.cmd([[ colorscheme gruvbox ]])
 
 		local keymap = vim.keymap.set
 		-- Lsp finder find the symbol definition implement reference
