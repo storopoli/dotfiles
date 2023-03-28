@@ -1,0 +1,71 @@
+" basic settings
+set autoread                                     " reload on external file changes
+set backspace=indent,eol,start                   " backspace behaviour
+set clipboard=unnamed,unnamedplus                " enable clipboard
+set encoding=utf8                                " enable utf8 support
+set hidden                                       " hide buffers, don't close
+set mouse=a                                      " enable mouse support
+set nowrap                                       " disable wrapping
+set number                                       " show line numbers
+set term=xterm-256color                          " terminal type
+set wildmenu wildmode=longest:full,full          " wildmode settings
+
+" ui settings
+filetype plugin indent on                        " enable filetype detection
+set listchars=eol:¶,trail:•,tab:▸\               " whitespace characters
+set scrolloff=999                                " center cursor position vertically
+set showbreak=¬\                                 " Wrapping character
+set showmatch                                    " show matching brackets
+syntax on                                        " enable syntax highlightning
+
+" colors
+hi Normal guibg=NONE ctermbg=NONE|               " transparency fix
+
+" statusline
+set laststatus=0                                 " disable statusline
+set ruler rulerformat=%40(%=%<%F%m\ \
+                      \›\ %{getfsize(@%)}B\ \
+                      \›\ %l/%L:%v%)
+
+" tabs and identation
+set autoindent expandtab                         " autoindentation & tabbing
+set shiftwidth=2 softtabstop=2 tabstop=2         " 1 tab = 2 spaces
+
+" search settings
+set hlsearch ignorecase incsearch smartcase      " search options
+
+" undo and backup
+set nobackup noswapfile nowritebackup            " disable backup/swap files
+set undofile undodir=~/.vim/undo undolevels=9999 " undo options
+
+" performance tuning
+set lazyredraw                                   " enable lazyredraw
+set nocursorline                                 " disable cursorline
+set ttyfast                                      " enable fast terminal connection
+
+" keymaps
+let mapleader=' '                                " leader key
+
+" blinking cursor
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
+let &t_SR = "\e[3 q"
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+let &t_Cs = "\e[4:3m"
+let &t_Ce = "\e[4:0m"
+
+
+" custom commands
+cnoreabbrev w!! w !sudo tee > /dev/null %|       " write file with sudo
+
+" jump to last edit position on opening file
+if has("autocmd")
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+

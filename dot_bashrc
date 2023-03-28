@@ -38,14 +38,14 @@ alias locate=plocate
 
 # if running in a container
 if [ -f /run/.containerenv ]; then
+	EDITOR=/usr/bin/vim
+  PAGER=/usr/bin/bat
 	eval "$(starship init bash)"
-	alias vim=nvim
+	alias vi=vim
 	alias r='. ranger'
 	alias top=btop
 fi
 
-mesa=`flatpak info org.freedesktop.Platform.GL.default//22.08 | awk -F': ' '/Version/ {print $2}' | uniq`
-echo mesa: $mesa 
 kernel=`uname -r`
 echo $HOSTNAME: $kernel
 

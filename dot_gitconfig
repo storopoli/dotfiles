@@ -64,4 +64,4 @@
 [commit]
 	gpgsign = true
 [credential]
-	helper = cache
+	helper = "!f() { /var/home/storopoli/.vscode-server/bin/e2816fe719a4026ffa1ee0189dc89bdfdbafb164/node /tmp/vscode-remote-containers-d62d3d69-cb6d-4ba2-8b3a-8c7a43cbe321.js git-credential-helper $*; }; f"
