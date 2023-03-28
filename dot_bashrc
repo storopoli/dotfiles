@@ -50,3 +50,7 @@ kernel=`uname -r`
 echo $HOSTNAME: $kernel
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+# fzf integration
+[[ -f /usr/share/fzf/key-bindings.bash ]] && source /usr/share/fzf/key-bindings.bash
+
