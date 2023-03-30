@@ -38,6 +38,7 @@ alias locate=plocate
 
 # if running in a container
 if [ -f /run/.containerenv ]; then
+	export IS_CONTAINER=1
 	export EDITOR=/usr/bin/nvim
 	export PAGER=/usr/bin/bat
 	eval "$(starship init bash)"
@@ -45,7 +46,10 @@ if [ -f /run/.containerenv ]; then
 	alias r='. ranger'
 	alias top=btop
 	alias locate=locate
-	[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session;}
+	# auto tmux attach session or open new one
+	#[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session;}
+else
+	export IS_CONTAINER=0
 fi
 
 kernel=`uname -r`

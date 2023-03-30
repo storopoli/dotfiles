@@ -30,8 +30,8 @@ return {
 				-- the 'curved' border is a custom border type
 				-- not natively supported but implemented in this plugin.
 				border = "rounded", --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
-				width = 80,
-				height = 20,
+				-- width = 80,
+				-- height = 20,
 				winblend = 10,
 				highlights = {
 					border = "Normal",

@@ -31,6 +31,7 @@ return {
 						["<C-k>"] = "move_selection_previous",
 					},
 				},
+				winblend = 20,
 			},
 			extensions = {
 				media_files = {
