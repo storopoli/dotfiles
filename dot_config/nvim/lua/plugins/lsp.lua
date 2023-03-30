@@ -18,8 +18,8 @@ return {
 
 		-- if you want to set up formatting on save, you can use this as a callback
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-		
-		-- Keybindings	
+
+		-- Keybindings
 		local on_attach = function(client, bufnr)
 			local nmap = function(keys, func, desc)
 				if desc then
@@ -28,7 +28,6 @@ return {
 
 				vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 			end
-
 
 			-- Create a command `:Format` local to the LSP buffer
 			vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
@@ -41,7 +40,7 @@ return {
 				group = augroup,
 				buffer = bufnr,
 				callback = function()
-					vim.lsp.buf.format({ bufnr = bufnr })
+					vim.lsp.buf.format({ async = true, bufnr = bufnr })
 				end,
 			})
 			if client.supports_method("textDocument/formatting") then
@@ -90,10 +89,16 @@ return {
 		})
 
 		-- C/C++
-		nvim_lsp.clangd.setup({})
+		nvim_lsp.clangd.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+		})
 
 		-- Julia
-		nvim_lsp.julials.setup({})
+		nvim_lsp.julials.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+		})
 
 		-- Python
 		nvim_lsp.pyright.setup({
@@ -175,7 +180,9 @@ return {
 					build = {
 						executable = "tectonic",
 						args = {
-							"-X", "compile", "%f",
+							"-X",
+							"compile",
+							"%f",
 							"--synctex",
 							"--keep-logs",
 							"--keep-intermediates",
