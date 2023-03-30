@@ -1,0 +1,15 @@
+theme = "base16_transparent"
+
+[editor]
+line-number = "relative"
+mouse = false
+
+[editor.cursor-shape]
+insert = "bar"
+
+[keys.normal]
+esc = ["collapse_selection", "keep_primary_selection"]
+
+[keys.normal.space]
+q = ":quit"
+w = ":write"
