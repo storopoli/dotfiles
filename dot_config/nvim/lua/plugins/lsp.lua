@@ -181,11 +181,7 @@ return {
 						executable = "tectonic",
 						args = {
 							"-X",
-							"compile",
-							"%f",
-							"--synctex",
-							"--keep-logs",
-							"--keep-intermediates",
+							"build",
 						},
 						isContinuous = false,
 						onSave = true,
