@@ -38,7 +38,7 @@ alias locate=plocate
 
 # if running in a container
 if [ -f /run/.containerenv ]; then
-	EDITOR=/usr/bin/vim
+	EDITOR=/usr/bin/nvim
   PAGER=/usr/bin/bat
 	eval "$(starship init bash)"
 	alias vi=vim
