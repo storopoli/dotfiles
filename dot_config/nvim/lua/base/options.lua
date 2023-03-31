@@ -1,11 +1,11 @@
 local options = {
 	hlsearch = false, -- set highlight on search
+	-- relative line numbers
 	number = true, -- make line numbers default
+	relativenumber = true,
 	-- vim.o.lazyredraw = true, -- lazy redraw for crazy macros
 	hidden = true, -- a lot of plugins depends on hidden true
 	cmdheight = 0, -- set command line height to zero/two lines
-	laststatus = 3, -- statusbar
-	winbar = "%=%m %f", -- winbar on top of windows
 	mouse = "a", -- enable mouse mode
 	-- Scrolling
 	scrolloff = 8, -- vertical scroll
@@ -18,18 +18,17 @@ local options = {
 	ignorecase = true,
 	smartcase = true,
 	updatetime = 250, -- faster completion (4000ms default)
-	signcolumn = "yes",
-	completeopt = "menuone,noselect", -- better completion experience
 	-- Window splitting
 	splitbelow = true,
 	splitright = true,
+	-- column
+	signcolumn = "yes",
+	colorcolumn = "80",
+	-- etc
+	vim.opt.isfname:append("@-@"),
 	pastetoggle = "<F2>", -- paste mode is F2
 	swapfile = false, -- no swap file
 	cursorline = true, -- highlight the line where the cursor is located
-	-- relative line numbers
-	numberwidth = 4,
-	relativenumber = true,
-	wrap = false,
 }
 
 for k, v in pairs(options) do

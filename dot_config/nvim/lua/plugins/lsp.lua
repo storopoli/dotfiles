@@ -1,180 +1,29 @@
 return {
-	"neovim/nvim-lspconfig",
+	"VonHeikemen/lsp-zero.nvim",
+	dependencies = {
+		"neovim/nvim-lspconfig",
+
+		-- Autocompletion
+		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-path",
+		"saadparwaiz1/cmp_luasnip",
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lua",
+		"kdheepak/cmp-latex-symbols",
+
+		-- Snippets
+		"L3MON4D3/LuaSnip",
+		"rafamadriz/friendly-snippets",
+	},
 	config = function()
-		-- Use an on_attach function to only map the following keys
-		-- after the language server attaches to the current buffer
+		local lsp = require("lsp-zero")
+		lsp.preset("recommended")
 
-		local lsp_formatting = function(bufnr)
-			vim.lsp.buf.format({
-				filter = function(client)
-					-- apply whatever logic you want (in this example, we'll only use null-ls)
-					return client.name == "null-ls"
-				end,
-				bufnr = bufnr,
-			})
-		end
-
-		local cmp = require("cmp")
-
-		-- if you want to set up formatting on save, you can use this as a callback
-		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-		-- Keybindings
-		local on_attach = function(client, bufnr)
-			local nmap = function(keys, func, desc)
-				if desc then
-					desc = "LSP: " .. desc
-				end
-
-				vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-			end
-
-			-- Create a command `:Format` local to the LSP buffer
-			vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-				vim.lsp.buf.format()
-			end, {
-				desc = "Format current buffer with LSP",
-			})
-			nmap("<leader>fo", vim.lsp.buf.format or vim.lsp.buf.formatting, "[Fo]rmat current buffer with LSP")
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = augroup,
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({ async = true, bufnr = bufnr })
-				end,
-			})
-			if client.supports_method("textDocument/formatting") then
-				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					group = augroup,
-					buffer = bufnr,
-					callback = function()
-						lsp_formatting(bufnr)
-					end,
-				})
-			end
-		end
-
-		-- Add additional capabilities supported by nvim-cmp
-		-- nvim hasn't added foldingRange to default capabilities, users must add it manually
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities.textDocument.foldingRange = {
-			dynamicRegistration = false,
-			lineFoldingOnly = true,
-		}
-
-		local nvim_lsp = require("lspconfig")
-
-		---------------------
-		-- setup languages --
-		---------------------
-
-		-- GoLang
-		nvim_lsp.gopls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				gopls = {
-					experimentalPostfixCompletions = true,
-					analyses = {
-						unusedparams = true,
-						shadow = true,
-					},
-					staticcheck = true,
-				},
-			},
-			init_options = {
-				usePlaceholders = true,
-			},
-		})
-
-		-- C/C++
-		nvim_lsp.clangd.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Julia
-		nvim_lsp.julials.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Python
-		nvim_lsp.pyright.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				python = {
-					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "workspace",
-						useLibraryCodeForTypes = true,
-						typeCheckingMode = "off",
-					},
-				},
-			},
-		})
-
-		-- Lua Language Server
-		nvim_lsp.lua_ls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					runtime = {
-						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						-- Get the language server to recognize the `vim` global
-						globals = { "vim" },
-					},
-					workspace = {
-						-- Make the server aware of Neovim runtime files
-						library = vim.api.nvim_get_runtime_file("", true),
-						checkThirdParty = false,
-					},
-					-- Do not send telemetry data containing a randomized but unique identifier
-					telemetry = {
-						enable = false,
-					},
-				},
-			},
-		})
-
-		-- Rust
-		nvim_lsp.rust_analyzer.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Webdev stuff
-		nvim_lsp.html.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-		nvim_lsp.cssls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-		nvim_lsp.tsserver.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Bash
-		nvim_lsp.bashls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- LaTeX
-		nvim_lsp.texlab.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
+		-- fix texlab to work with tectonic only
+		lsp.configure("texlab", {
 			cmd = { "texlab" },
-			filetypes = { "tex", "bib", "plaintex" },
+			filetypes = { "tex", "bib" },
 			settings = {
 				texlab = {
 					build = {
@@ -192,27 +41,107 @@ return {
 			},
 		})
 
-		--------
-		-- UI --
-		--------
-		--Change diagnostic symbols in the sign column (gutter)
-		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-		end
-		vim.diagnostic.config({
-			-- virtual_text = {
-			-- 	source = "always", -- Or "if_many"
-			-- },
-			virtual_text = false,
-			signs = true,
-			underline = true,
-			update_in_insert = true,
-			severity_sort = false,
-			float = {
-				source = "always", -- Or "if_many"
+		-- fix Undefined global 'vim'
+		lsp.configure("lua_ls", {
+			settings = {
+				Lua = {
+					workspace = { checkThirdParty = false },
+					telemetry = { enable = false },
+					diagnostics = {
+						-- Fix Undefined global 'vim'
+						globals = { "vim" },
+					},
+				},
 			},
+		})
+
+		-- all other LSPs default configs
+		lsp.configure("tsserver", {})
+		lsp.configure("bashls", {})
+		lsp.configure("julials", {})
+		lsp.configure("pyright", {})
+
+		-- completion
+		vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+		local cmp = require("cmp")
+		local cmp_select = { behavior = cmp.SelectBehavior.Select }
+		local cmp_mappings = lsp.defaults.cmp_mappings({
+			["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+			["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+			["<C-y>"] = cmp.mapping.confirm({ select = true }),
+			["<C-Space>"] = cmp.mapping.complete(),
+		})
+
+		-- I like my tabs, but I should stop doing this
+		cmp_mappings["<Tab>"] = nil
+		cmp_mappings["<S-Tab>"] = nil
+
+		-- include latex symbols please
+		local cmp_sources = lsp.defaults.cmp_sources()
+		table.insert(cmp_sources, {
+			name = "latex_symbols",
+			option = {
+				strategy = 1, -- julia
+			},
+		})
+
+		lsp.setup_nvim_cmp({
+			mapping = cmp_mappings,
+			sources = cmp_sources,
+		})
+
+		lsp.set_preferences({
+			suggest_lsp_servers = false,
+			sign_icons = {
+				error = "E",
+				warn = "W",
+				hint = "H",
+				info = "I",
+			},
+		})
+
+		lsp.on_attach(function(client, bufnr)
+			local opts = { buffer = bufnr, remap = false }
+
+			vim.keymap.set("n", "gd", function()
+				vim.lsp.buf.definition()
+			end, opts)
+			vim.keymap.set("n", "K", function()
+				vim.lsp.buf.hover()
+			end, opts)
+			vim.keymap.set("n", "<leader>vws", function()
+				vim.lsp.buf.workspace_symbol()
+			end, opts)
+			vim.keymap.set("n", "<leader>vd", function()
+				vim.diagnostic.open_float()
+			end, opts)
+			vim.keymap.set("n", "[d", function()
+				vim.diagnostic.goto_next()
+			end, opts)
+			vim.keymap.set("n", "]d", function()
+				vim.diagnostic.goto_prev()
+			end, opts)
+			vim.keymap.set("n", "<leader>vca", function()
+				vim.lsp.buf.code_action()
+			end, opts)
+			vim.keymap.set("n", "<leader>vrr", function()
+				vim.lsp.buf.references()
+			end, opts)
+			vim.keymap.set("n", "<leader>vrn", function()
+				vim.lsp.buf.rename()
+			end, opts)
+			vim.keymap.set("i", "<C-h>", function()
+				vim.lsp.buf.signature_help()
+			end, opts)
+			vim.keymap.set("n", "<leader>f", function()
+				vim.lsp.buf.format()
+			end, opts)
+		end)
+
+		lsp.setup()
+
+		vim.diagnostic.config({
+			virtual_text = true,
 		})
 	end,
 }
