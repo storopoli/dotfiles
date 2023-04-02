@@ -3,6 +3,10 @@ set selection-clipboard clipboard
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 
+# texlab integration
+set synctex true
+set synctex-editor-command 'nvr -c "drop %1 | normal! %2G%3|"'
+
 #set font "FiraCode 15"
 
 # Tokyo Night Colorscheme

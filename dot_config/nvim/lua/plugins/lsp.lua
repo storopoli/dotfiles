@@ -37,6 +37,10 @@ return {
 					},
 					formatterLineLength = 80,
 					latexFormatter = "texlab",
+					forwardSearch = {
+						executable = "zathura",
+						args = { "--unique", "%p#src:%f:%l:1" },
+					},
 				},
 			},
 		})
@@ -62,7 +66,7 @@ return {
 		lsp.configure("pyright", {})
 
 		-- completion
-		vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+		vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 		local cmp = require("cmp")
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 		local cmp_mappings = lsp.defaults.cmp_mappings({
