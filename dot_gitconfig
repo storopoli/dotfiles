@@ -63,5 +63,15 @@
 	version = 2
 [commit]
 	gpgsign = true
-[credential]
-	helper = "!f() { /var/home/storopoli/.vscode-server/bin/e2816fe719a4026ffa1ee0189dc89bdfdbafb164/node /tmp/vscode-remote-containers-d62d3d69-cb6d-4ba2-8b3a-8c7a43cbe321.js git-credential-helper $*; }; f"
+[delta]
+        minus-style                   = syntax "#37222c"
+        minus-non-emph-style          = syntax "#37222c"
+        minus-emph-style              = syntax "#713137"
+        minus-empty-line-marker-style = syntax "#37222c"
+        line-numbers-minus-style      = "#c25d64"
+        plus-style                    = syntax "#20303b"
+        plus-non-emph-style           = syntax "#20303b"
+        plus-emph-style               = syntax "#2c5a66"
+        plus-empty-line-marker-style  = syntax "#20303b"
+        line-numbers-plus-style       = "#399a96"
+        line-numbers-zero-style       = "#3b4261"
