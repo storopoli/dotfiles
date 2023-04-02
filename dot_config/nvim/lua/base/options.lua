@@ -13,7 +13,7 @@ local options = {
 	timeoutlen = 500, -- time in milliseconds to wait for a mapped sequence to complete
 	wrap = false, -- no wrap
 	breakindent = true, -- enable break indent
-	undofile = true,  -- save undo history
+	undofile = true, -- save undo history
 	-- Case insensitive searching UNLESS /C or capital in search
 	ignorecase = true,
 	smartcase = true,
@@ -26,11 +26,10 @@ local options = {
 	colorcolumn = "80",
 	-- etc
 	vim.opt.isfname:append("@-@"),
-	pastetoggle = "<F2>", -- paste mode is F2
+	pastetoggle = "<F7>", -- paste mode is F7
 	swapfile = false, -- no swap file
 	cursorline = true, -- highlight the line where the cursor is located
 }
-
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end

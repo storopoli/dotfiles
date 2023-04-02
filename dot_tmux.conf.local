@@ -363,15 +363,26 @@ tmux_conf_copy_to_os_clipboard=false
 # this is the place to override or undo settings
 
 # increase history size
-#set -g history-limit 10000
+set -g history-limit 10000
 
 # start with mouse mode enabled
 #set -g mouse on
 
+# nvim fix
+set -g terminal-overrides ',xterm-256color:Tc'
+set -g default-terminal "tmux-256color"
+#set -as terminal-overrides ',xterm*:sitm=\E[3m'
+
+# foot integration
+set-option -ga terminal-overrides ",foot:Tc"
+
+# tmux use zsh
+set-option -g default-shell /bin/zsh
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
-#set -g status-keys vi
-#set -g mode-keys vi
+set -g status-keys vi
+set -g mode-keys vi
 
 # replace C-b by C-a instead of using both prefixes
 # set -gu prefix2
