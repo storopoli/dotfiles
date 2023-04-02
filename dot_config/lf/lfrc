@@ -11,15 +11,15 @@ set previewer lf-preview
 # cmds/functions
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
-	application/*officedocument*) flatpak run org.libreoffice.LibreOffice $fx ;;
+	application/*officedocument*) libreoffice $fx ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
         text/*|application/json|inode/x-empty) $EDITOR $fx;;
 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
 	image/svg+xml) display -- $f ;;
 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
 		setsid -f swayimg $f 2>/dev/null 2>&1 ;;
-	audio/*) flatpak run io.mpv.Mpv -quiet $f ;;
-	video/*) setsid -f flatpak run io.mpv.Mpv $f -quiet >/dev/null 2>&1 ;;
+	audio/*) mpv -quiet $f ;;
+	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
 	application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 	application/pgp-encrypted) $EDITOR $fx ;;
     esac
