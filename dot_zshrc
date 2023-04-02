@@ -38,6 +38,37 @@ bindkey "^[[1;5D" backward-word
 bindkey '^H' backward-kill-word
 bindkey '^[[3;' kill-word
 
+# lfcd
+# https://github.com/gokcehan/lf/blob/master/etc/lfcd.sh
+function lfcd {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+}
+zle -N lfcd
+bindkey -s '^O' 'lfcd^M'
+
+# foot integration
+# https://codeberg.org/dnkl/foot/wiki#zsh
+function osc7 {
+    local LC_ALL=C
+    export LC_ALL
+
+    setopt localoptions extendedglob
+    input=( ${(s::)PWD} )
+    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
+    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
+}
+add-zsh-hook -Uz chpwd osc7
+
 # fast parallel grep
 # needs GNU parallel
 # check out: https://stackoverflow.com/questions/9066609/fastest-possible-grep
@@ -60,6 +91,15 @@ if [ -n "${ZSH_VERSION-}" ]; then
     command_not_found_handle "$@"
  }
 fi
+# if running in a container
+if [ -f /run/.containerenv ]; then
+	export IS_CONTAINER=1
+	alias locate=locate
+	# auto tmux attach session or open new one
+	#[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session;}
+else
+	export IS_CONTAINER=0
+fi
 
 # User specific environment variables
 export JULIA_NUM_THREADS=auto
@@ -67,6 +107,7 @@ export EDITOR=nvim
 export PAGER=bat
 export MANPAGER="sh -c 'col -bx | bat -l man'"
 export MANROFFOPT="-c"
+#export SUDO_ASKPASS=/usr/local/bin/ssh-askpass
 
 # Local binaries
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
@@ -87,6 +128,6 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh # arch
 #source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # fedora/debian
 #source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # fedora/debian
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # arch
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # ach
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # arch
 #source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh # arch
 
