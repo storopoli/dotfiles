@@ -51,6 +51,12 @@ alias \
 	e="$EDITOR" \
 	v="$EDITOR" 
 
+# Flatpak stuff
+alias \
+	mpv="flatpak run io.mpv.Mpv" \
+	vlc="flatpak run org.videolan.VLC" \
+	libreoffice="flatpak run org.libreoffice.LibreOffice"
+
 # Julia
 alias jp='julia --project'
 alias pluto="julia -e 'using Pluto; Pluto.run();'"

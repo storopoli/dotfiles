@@ -25,7 +25,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-unset rc
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 export EDITOR=/usr/bin/vi
@@ -35,6 +34,9 @@ if [ "$PS1" ]; then
 fi
 
 alias locate=plocate
+
+# vim mode
+set -o vi
 
 # if running in a container
 if [ -f /run/.containerenv ]; then
