@@ -105,6 +105,7 @@ return {
 		})
 
 		lsp.on_attach(function(client, bufnr)
+			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 			local opts = { buffer = bufnr, remap = false }
 
 			vim.keymap.set("n", "gd", function()
@@ -140,6 +141,15 @@ return {
 			vim.keymap.set("n", "<leader>f", function()
 				vim.lsp.buf.format()
 			end, opts)
+
+			-- autoformat on save
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.format({ bufnr = bufnr })
+				end,
+			})
 		end)
 
 		lsp.setup()
