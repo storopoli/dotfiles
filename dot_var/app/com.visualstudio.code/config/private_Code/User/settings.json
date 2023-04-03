@@ -1,0 +1,170 @@
+{
+  // General configs
+  "telemetry.telemetryLevel": "off", // most important
+  "update.mode": "none",
+  "window.restoreWindows": "none",
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorTheme": "Default Dark+",
+  "editor.fontFamily": "Consolas, 'Courier New', monospace",
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.gpuAcceleration": "canvas",
+  // Font Size
+  "editor.fontSize": 18,
+  "scm.inputFontSize": 18,
+  "debug.console.fontSize": 18,
+  "terminal.integrated.fontSize": 18,
+  "markdown.preview.fontSize": 18,
+  "editor.suggestFontSize": 18,
+  "window.zoomLevel": 1.5,
+  // Vim stuff
+  // Vim stuff
+  "vim.leader": "<space>",
+  "keyboard.dispatch": "keyCode",
+  "vim.normalModeKeyBindings": [
+    {
+      "before": [
+        "<C-n>"
+      ],
+      "commands": [
+        ":nohl",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.files.action.focusFilesExplorer",
+      ]
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "J"
+      ],
+      "commands": [
+        "editor.action.moveLinesUpAction"
+      ]
+    },
+    {
+      "before": [
+        "K"
+      ],
+      "commands": [
+        "editor.action.moveLinesDownAction"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+  ],
+  // Flatpak
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "/usr/bin/flatpak-spawn",
+      "args": [
+        "--host",
+        "--env=TERM=xterm-256color",
+        "script",
+        "--quiet",
+        "/dev/null"
+      ]
+    },
+    "zsh": {
+      "path": "/usr/bin/flatpak-spawn",
+      "args": [
+        "--host",
+        "--env=TERM=xterm-256color",
+        "--env=SHELL=zsh",
+        "script",
+        "--quiet",
+        "/dev/null"
+      ]
+    }
+  },
+  // Git settings
+  "git.autofetch": true,
+  "git.autorefresh": true,
+  "git.confirmSync": false,
+  "git.enableCommitSigning": true,
+  "github.gitProtocol": "ssh",
+  // LiveShare
+  "liveshare.presence": true,
+  // Julia
+  "julia.execution.codeInREPL": true,
+  "julia.enableCrashReporter": false,
+  "julia.enableTelemetry": false,
+  "julia.executablePath": "/var/home/storopoli/.juliaup/bin/julia",
+  "julia.useRevise": true,
+  "julia.symbolCacheDownload": true,
+  "julia.NumThreads": "auto",
+  "julia.runtimeCompletions": true,
+  // "julia.persistentSession.enabled": true,
+  "terminal.integrated.commandsToSkipShell": [
+    "language-julia.interrupt"
+  ],
+  // Python
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.formatting.provider": "black",
+  // LaTeX
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "tectonic",
+      "tools": [
+        "tectonic"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "tectonic",
+      "command": "tectonic",
+      "args": [
+        "-X",
+        "build"
+        // "%DOC%.tex"
+      ],
+      "env": {}
+    }
+  ],
+  "[latex]": {
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix"
+  },
+  "[bibtex]": {
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+  },
+  // Flatpak toolbox hack
+  "dev.containers.dockerPath": "/var/home/storopoli/.local/bin/podman-host",
+}

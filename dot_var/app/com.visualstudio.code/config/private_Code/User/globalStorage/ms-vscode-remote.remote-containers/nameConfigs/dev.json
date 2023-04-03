@@ -1,0 +1,49 @@
+{
+  "name" : "dev",
+  "remoteUser": "${localEnv:USER}",
+  "settings": {
+    "remote.containers.copyGitConfig": false,
+    "remote.containers.gitCredentialHelperConfigLocation": "none",
+    "terminal.integrated.profiles.linux": {
+      "shell": {
+        "path": "${localEnv:SHELL}",
+        "args": [
+          "-l"
+        ]
+      }
+    },
+    "terminal.integrated.defaultProfile.linux": "shell"
+  },
+  "remoteEnv": {
+    "COLORTERM": "${localEnv:COLORTERM}",
+    "DBUS_SESSION_BUS_ADDRESS": "${localEnv:DBUS_SESSION_BUS_ADDRESS}",
+    "DESKTOP_SESSION": "${localEnv:DESKTOP_SESSION}",
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "LANG": "${localEnv:LANG}",
+    "SHELL": "${localEnv:SHELL}",
+    "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}",
+    "TERM": "${localEnv:TERM}",
+    "VTE_VERSION": "${localEnv:VTE_VERSION}",
+    "XDG_CURRENT_DESKTOP": "${localEnv:XDG_CURRENT_DESKTOP}",
+    "XDG_DATA_DIRS": "${localEnv:XDG_DATA_DIRS}",
+    "XDG_MENU_PREFIX": "${localEnv:XDG_MENU_PREFIX}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "XDG_SESSION_DESKTOP": "${localEnv:XDG_SESSION_DESKTOP}",
+    "XDG_SESSION_TYPE": "${localEnv:XDG_SESSION_TYPE}"
+},
+"extensions": [
+	"eamodio.gitlens",
+	"ivan-bocharov.stan-vscode",
+	"James-Yu.latex-workshop",
+	"julialang.language-julia",
+	"ms-python.python",
+	"ms-python.vscode-pylance",
+	"ms-toolsai.jupyter",
+	"ms-toolsai.jupyter-keymap",
+	"ms-toolsai.jupyter-renderers",
+	"ms-toolsai.vscode-jupyter-cell-tags",
+	"ms-toolsai.vscode-jupyter-slideshow",
+	"rust-lang.rust-analyzer"
+],
+"workspaceFolder": "/var/home/storopoli/git/academic/cv"
+}
