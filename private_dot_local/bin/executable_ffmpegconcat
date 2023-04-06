@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+if [ "$1" == "--help" ]; then
+	echo "Usage `basename $0` mylist.txt"
+	echo "Outputs a output.mp4 conctenating all the mp4 files in a txt file"
+	echo "The list format is the following:"
+	echo "$ cat mylist.txt"
+        echo "file '/path/to/file1'"
+        echo "file '/path/to/file2'"
+        echo "file '/path/to/file3'"
+	exit 0
+fi
+ffmpeg -f concat -safe 0 -i "$1" -c copy output.mp4
