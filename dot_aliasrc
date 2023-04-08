@@ -29,13 +29,8 @@ alias \
 	ports="netstat -tulanp" \
 	untar="tar -zxvf" \
 	python="python3" \
-	vi="nvim" \
-	nano="nvim" \
-	vim="nvim" \
 	vi=vim \
-	top=btop \
-	r=". ranger" \
-	n="neofetch"
+	top=btop 
 
 # Colorize commands when possible.
 alias \

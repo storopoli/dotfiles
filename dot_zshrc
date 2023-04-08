@@ -39,29 +39,29 @@ compinit
 _comp_options+=(globdots) # Include hidden files.
 
 # vim mode
-bindkey -v
-export KEYTIMEOUT=1
+#bindkey -v
+#export KEYTIMEOUT=1
 # Use vim keys in tab complete menu:
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -v '^?' backward-delete-char
+#bindkey -M menuselect 'h' vi-backward-char
+#bindkey -M menuselect 'k' vi-up-line-or-history
+#bindkey -M menuselect 'l' vi-forward-char
+#bindkey -M menuselect 'j' vi-down-line-or-history
+#bindkey -v '^?' backward-delete-char
 # Change cursor shape for different vi modes.
-function zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
-    esac
-}
-zle -N zle-keymap-select
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+#function zle-keymap-select () {
+#    case $KEYMAP in
+#        vicmd) echo -ne '\e[1 q';;      # block
+#        viins|main) echo -ne '\e[5 q';; # beam
+#    esac
+#}
+#zle -N zle-keymap-select
+#zle-line-init() {
+#    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+#    echo -ne "\e[5 q"
+#}
+#zle -N zle-line-init
+#echo -ne '\e[5 q' # Use beam shape cursor on startup.
+#preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # Ctrl + left/right
 # check out: https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
@@ -71,40 +71,45 @@ bindkey "^[[1;5D" backward-word
 # check out: https://unix.stackexchange.com/questions/12787/zsh-kill-ctrl-backspace-ctrl-delete
 bindkey '^H' backward-kill-word
 bindkey '^[[3;' kill-word
+# Ctrl + home/end
+# check out: https://stackoverflow.com/questions/8638012/fix-key-settings-home-end-insert-delete-in-zshrc-when-running-zsh-in-terminat/8645267#8645267
+bindkey  "^[[H" beginning-of-line
+bindkey  "^[[F" end-of-line
+bindkey  "^[[3~" delete-char
 
 # zoxide
 eval "$(zoxide init zsh)"
 
 # lfcd
 # https://github.com/gokcehan/lf/blob/master/etc/lfcd.sh
-function lfcd {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
-        fi
-    fi
-}
-zle -N lfcd
-bindkey -s '^O' 'lfcd^M'
+#function lfcd {
+#    tmp="$(mktemp)"
+#    lf -last-dir-path="$tmp" "$@"
+#    if [ -f "$tmp" ]; then
+#        dir="$(cat "$tmp")"
+#        rm -f "$tmp"
+#        if [ -d "$dir" ]; then
+#            if [ "$dir" != "$(pwd)" ]; then
+#                cd "$dir"
+#            fi
+#        fi
+#    fi
+#}
+#zle -N lfcd
+#bindkey -s '^O' 'lfcd^M'
 
 # foot integration
 # https://codeberg.org/dnkl/foot/wiki#zsh
-function osc7 {
-    local LC_ALL=C
-    export LC_ALL
-
-    setopt localoptions extendedglob
-    input=( ${(s::)PWD} )
-    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
-    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
-}
-add-zsh-hook -Uz chpwd osc7
+#function osc7 {
+#    local LC_ALL=C
+#    export LC_ALL
+#
+#    setopt localoptions extendedglob
+#    input=( ${(s::)PWD} )
+#    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
+#    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
+#}
+#add-zsh-hook -Uz chpwd osc7
 
 # fast parallel grep
 # needs GNU parallel
@@ -140,7 +145,7 @@ fi
 
 # User specific environment variables
 export JULIA_NUM_THREADS=auto
-export EDITOR=nvim
+export EDITOR=vim
 export PAGER=bat
 export MANPAGER="sh -c 'col -bx | bat -l man'"
 export MANROFFOPT="-c"
