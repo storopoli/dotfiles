@@ -44,7 +44,8 @@ alias \
 	ka="killall" \
 	g="git" \
 	e="$EDITOR" \
-	v="$EDITOR" 
+	v="$EDITOR" \
+  r="ranger ."
 
 # Flatpak stuff
 alias \
