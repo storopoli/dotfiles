@@ -43,6 +43,7 @@ if [ -f /run/.containerenv ]; then
 	export IS_CONTAINER=1
 	export EDITOR=/usr/bin/vim
 	export PAGER=/usr/bin/bat
+  export JULIA_NUM_THREADS=auto
 	alias vi=vim
 	alias r='. ranger'
 	alias top=btop
