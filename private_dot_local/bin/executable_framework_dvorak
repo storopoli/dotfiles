@@ -1,0 +1,41 @@
+#!/bin/env bash
+# Framework en-us dvorak
+
+ectool raw 0x3E0C d1,d1,b3,b2,w0d # Tab > Tab
+ectool raw 0x3E0C d1,d1,b0,b2,w52 # q > '
+ectool raw 0x3E0C d1,d1,b6,b5,w41 # w > ,
+ectool raw 0x3E0C d1,d1,b2,b4,w49 # e > .
+ectool raw 0x3E0C d1,d1,b6,b6,w4d # r > p
+ectool raw 0x3E0C d1,d1,b3,b6,w35 # t > y
+ectool raw 0x3E0C d1,d1,b3,b7,w2b # y > f
+ectool raw 0x3E0C d1,d1,b6,b7,w34 # u > g
+ectool raw 0x3E0C d1,d1,b6,ba,w21 # i > c
+ectool raw 0x3E0C d1,d1,b3,b8,w2d # o > r
+ectool raw 0x3E0C d1,d1,b5,bd,w4b # p > l
+ectool raw 0x3E0C d1,d1,b6,bd,w4a # [ > /
+ectool raw 0x3E0C d1,d1,b6,be,w55 # ] > =
+ectool raw 0x3E0C d1,d1,b2,b8,w5d # \ > \
+
+ectool raw 0x3E0C d1,d1,b4,b4,w76 # Caps > Escape
+ectool raw 0x3E0C d1,d1,b7,b2,w1c # a > a
+ectool raw 0x3E0C d1,d1,b4,b5,w44 # s > o
+ectool raw 0x3E0C d1,d1,b7,be,w24 # d > e
+ectool raw 0x3E0C d1,d1,b7,b6,w3c # f > u
+ectool raw 0x3E0C d1,d1,b2,b6,w43 # g > i
+ectool raw 0x3E0C d1,d1,b2,b7,w23 # h > d
+ectool raw 0x3E0C d1,d1,b7,b7,w33 # j > h
+ectool raw 0x3E0C d1,d1,b7,ba,w2c # k > t
+ectool raw 0x3E0C d1,d1,b7,b8,w31 # l > n
+ectool raw 0x3E0C d1,d1,b7,bd,w1b # ; > s
+ectool raw 0x3E0C d1,d1,b0,be,w4e # ' > -
+
+ectool raw 0x3E0C d1,d1,b1,b5,w4c # z > ;
+ectool raw 0x3E0C d1,d1,b0,b5,w15 # x > q
+ectool raw 0x3E0C d1,d1,b0,b0,w3b # c > j
+ectool raw 0x3E0C d1,d1,b0,b6,w42 # v > k
+ectool raw 0x3E0C d1,d1,b1,b6,w22 # b > x
+ectool raw 0x3E0C d1,d1,b1,b7,w32 # n > b
+ectool raw 0x3E0C d1,d1,b0,b7,w3a # m > m
+ectool raw 0x3E0C d1,d1,b0,ba,w1d # , > w
+ectool raw 0x3E0C d1,d1,b0,b8,w2a # . > v
+ectool raw 0x3E0C d1,d1,b0,bd,w1a # / > z

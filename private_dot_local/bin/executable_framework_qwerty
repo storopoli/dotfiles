@@ -1,0 +1,41 @@
+#!/bin/env bash
+# Framework en-us qwerty defaults
+
+ectool raw 0x3E0C d1,d1,b3,b2,w0d # Tab > Tab
+ectool raw 0x3E0C d1,d1,b0,b2,w15 # q > q
+ectool raw 0x3E0C d1,d1,b6,b5,w1d # w > w
+ectool raw 0x3E0C d1,d1,b2,b4,w24 # e > e
+ectool raw 0x3E0C d1,d1,b6,b6,w2d # r > r
+ectool raw 0x3E0C d1,d1,b3,b6,w2c # t > t
+ectool raw 0x3E0C d1,d1,b3,b7,w35 # y > y
+ectool raw 0x3E0C d1,d1,b6,b7,w3c # u > u
+ectool raw 0x3E0C d1,d1,b6,ba,w43 # i > i
+ectool raw 0x3E0C d1,d1,b3,b8,w44 # o > o
+ectool raw 0x3E0C d1,d1,b5,bd,w4d # p > p
+ectool raw 0x3E0C d1,d1,b6,bd,w54 # [ > [
+ectool raw 0x3E0C d1,d1,b6,be,w5b # ] > ]
+ectool raw 0x3E0C d1,d1,b2,b8,w5d # \ > \
+
+ectool raw 0x3E0C d1,d1,b4,b4,w76 # Caps > Escape
+ectool raw 0x3E0C d1,d1,b7,b2,w1c # a > a
+ectool raw 0x3E0C d1,d1,b4,b5,w1b # s > s
+ectool raw 0x3E0C d1,d1,b7,be,w23 # d > d
+ectool raw 0x3E0C d1,d1,b7,b6,w2b # f > f
+ectool raw 0x3E0C d1,d1,b2,b6,w34 # g > g
+ectool raw 0x3E0C d1,d1,b2,b7,w33 # h > h
+ectool raw 0x3E0C d1,d1,b7,b7,w3b # j > j
+ectool raw 0x3E0C d1,d1,b7,ba,w42 # k > k
+ectool raw 0x3E0C d1,d1,b7,b8,w4b # l > l
+ectool raw 0x3E0C d1,d1,b7,bd,w4c # ; > ;
+ectool raw 0x3E0C d1,d1,b0,be,w52 # ' > '
+
+ectool raw 0x3E0C d1,d1,b1,b5,w1a # z > z
+ectool raw 0x3E0C d1,d1,b0,b5,w22 # x > x
+ectool raw 0x3E0C d1,d1,b0,b0,w21 # c > c
+ectool raw 0x3E0C d1,d1,b0,b6,w2a # v > v
+ectool raw 0x3E0C d1,d1,b1,b6,w32 # b > b
+ectool raw 0x3E0C d1,d1,b1,b7,w31 # n > n
+ectool raw 0x3E0C d1,d1,b0,b7,w3a # m > m
+ectool raw 0x3E0C d1,d1,b0,ba,w41 # , > ,
+ectool raw 0x3E0C d1,d1,b0,b8,w49 # . > .
+ectool raw 0x3E0C d1,d1,b0,bd,w4a # / > /
