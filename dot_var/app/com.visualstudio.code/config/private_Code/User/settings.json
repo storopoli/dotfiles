@@ -1,6 +1,7 @@
 {
   // General configs
   "telemetry.telemetryLevel": "off", // most important
+  "files.enableTrash": false,
   "update.mode": "none",
   "window.restoreWindows": "none",
   "window.menuBarVisibility": "toggle",
@@ -19,7 +20,6 @@
   "markdown.preview.fontSize": 18,
   "editor.suggestFontSize": 18,
   "window.zoomLevel": 1.5,
-  // Vim stuff
   // Vim stuff
   "vim.leader": "<space>",
   "keyboard.dispatch": "keyCode",
