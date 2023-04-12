@@ -1,10 +1,11 @@
 #!/bin/sh
 
 # sudo not required for some system commands
-for command in cryptsetup mount umount emerge pacman sv updatedb su shutdown poweroff reboot ; do
+for command in cryptsetup mount umount emerge pacman sv updatedb su shutdown poweroff reboot; do
 	# shellcheck disable=2139
 	alias "$command=sudo $command"
-done; unset command
+done
+unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
@@ -30,13 +31,13 @@ alias \
 	untar="tar -zxvf" \
 	python="python3" \
 	vi=vim \
-	top=btop 
+	top=btop
 
 # Colorize commands when possible.
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
-	diff="diff --color=auto" 
+	diff="diff --color=auto"
 
 # These common commands are just too long! Abbreviate them.
 # shellcheck disable=2139
@@ -45,7 +46,8 @@ alias \
 	g="git" \
 	e="$EDITOR" \
 	v="$EDITOR" \
-  r="ranger ."
+	n="neofetch" \
+	r=". ranger"
 
 # Flatpak stuff
 alias \
@@ -56,4 +58,3 @@ alias \
 # Julia
 alias jp='julia --project'
 alias pluto="julia -e 'using Pluto; Pluto.run();'"
-

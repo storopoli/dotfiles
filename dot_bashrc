@@ -6,9 +6,8 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+	PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
 
@@ -30,7 +29,7 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 export EDITOR=/usr/bin/vi
 
 if [ "$PS1" ]; then
-   PS1="[\u@\h:\l \W]\\$ "
+	PS1="[\u@\h:\l \W]\\$ "
 fi
 
 alias locate=plocate
@@ -43,10 +42,10 @@ if [ -f /run/.containerenv ]; then
 	export IS_CONTAINER=1
 	export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 	#export GPG_TTY=$(tty)
-	export EDITOR=/usr/bin/vim
+	export EDITOR=/usr/bin/nvim
 	export PAGER=/usr/bin/bat
-        export JULIA_NUM_THREADS=auto
-	alias vi=vim
+	export JULIA_NUM_THREADS=auto
+	alias vi=nvim
 	alias r='. ranger'
 	alias top=btop
 	alias locate=locate
@@ -56,11 +55,10 @@ else
 	export IS_CONTAINER=0
 fi
 
-kernel=`uname -r`
+kernel=$(uname -r)
 echo "$HOSTNAME": "$kernel"
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 
 # fzf integration
 [[ -f /usr/share/fzf/key-bindings.bash ]] && source /usr/share/fzf/key-bindings.bash
-
