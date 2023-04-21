@@ -23,31 +23,100 @@
   // Vim stuff
   "vim.leader": "<space>",
   "keyboard.dispatch": "keyCode",
+  "vim.sneak": true,
+  "vim.easymotion": true,
+  "vim.easymotionKeys": "ntesiroalhdcxzlpufywqjbmgkv",
   "vim.normalModeKeyBindings": [
     {
       "before": [
-        "<C-n>"
+        "<C-s>"
       ],
       "commands": [
-        ":nohl",
+        "workbench.action.files.save"
       ]
     },
     {
       "before": [
         "leader",
-        "w"
+        "e"
       ],
       "commands": [
-        "workbench.action.files.save",
+        "workbench.files.action.focusFilesExplorer"
       ]
     },
     {
       "before": [
-        "leader",
+        "g",
+        "z",
+        "a"
+      ],
+      "after": [
+        "y",
         "s"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "z",
+        "d"
       ],
-      "commands": [
-        "workbench.files.action.focusFilesExplorer",
+      "after": [
+        "d",
+        "s"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "z",
+        "r"
+      ],
+      "after": [
+        "c",
+        "s"
+      ]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "f"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "f"
+      ]
+    },
+    {
+      "before": [
+        "F"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "F"
+      ]
+    },
+    {
+      "before": [
+        "t"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "t"
+      ]
+    },
+    {
+      "before": [
+        "T"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "T"
       ]
     }
   ],
@@ -83,7 +152,7 @@
       "commands": [
         "editor.action.outdentLines"
       ]
-    },
+    }
   ],
   // Flatpak
   "terminal.integrated.defaultProfile.linux": "bash",
@@ -163,8 +232,8 @@
   },
   "[bibtex]": {
     "editor.formatOnPaste": false,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": false
   },
   // Flatpak toolbox hack
-  "dev.containers.dockerPath": "/var/home/storopoli/.local/bin/podman-host",
+  "dev.containers.dockerPath": "/var/home/storopoli/.local/bin/podman-host"
 }
