@@ -145,7 +145,7 @@ fi
 
 # User specific environment variables
 export JULIA_NUM_THREADS=auto
-export EDITOR=vim
+export EDITOR=nvim
 export PAGER=bat
 export MANPAGER="sh -c 'col -bx | bat -l man'"
 export MANROFFOPT="-c"
