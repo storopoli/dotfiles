@@ -81,6 +81,16 @@
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": [
+        "s"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "s"
+      ]
+    },
+    {
+      "before": [
         "f"
       ],
       "after": [
@@ -117,6 +127,15 @@
         "<leader>",
         "<leader>",
         "T"
+      ]
+    },
+    {
+      "before": [
+        "K"
+      ],
+      "after": [
+        "g",
+        "h"
       ]
     }
   ],
@@ -127,22 +146,6 @@
       ],
       "commands": [
         "editor.action.indentLines"
-      ]
-    },
-    {
-      "before": [
-        "J"
-      ],
-      "commands": [
-        "editor.action.moveLinesUpAction"
-      ]
-    },
-    {
-      "before": [
-        "K"
-      ],
-      "commands": [
-        "editor.action.moveLinesDownAction"
       ]
     },
     {
