@@ -9,6 +9,7 @@
   "editor.fontFamily": "Consolas, 'Courier New', monospace",
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
+  "workbench.editor.enablePreview": false,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.gpuAcceleration": "canvas",
@@ -23,7 +24,8 @@
   // Vim stuff
   "vim.leader": "<space>",
   "keyboard.dispatch": "keyCode",
-  "vim.sneak": true,
+  "vim.smartRelativeLine": true,
+  "vim.sneak": false,
   "vim.easymotion": true,
   "vim.easymotionKeys": "ntesiroalhdcxzlpufywqjbmgkv",
   "vim.normalModeKeyBindings": [
@@ -86,6 +88,18 @@
       "after": [
         "<leader>",
         "<leader>",
+        "2",
+        "s"
+      ]
+    },
+    {
+      "before": [
+        "S"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
         "s"
       ]
     },
@@ -96,6 +110,7 @@
       "after": [
         "<leader>",
         "<leader>",
+        "2",
         "f"
       ]
     },
@@ -106,6 +121,7 @@
       "after": [
         "<leader>",
         "<leader>",
+        "2",
         "F"
       ]
     },
@@ -116,6 +132,7 @@
       "after": [
         "<leader>",
         "<leader>",
+        "2",
         "t"
       ]
     },
@@ -126,6 +143,7 @@
       "after": [
         "<leader>",
         "<leader>",
+        "2",
         "T"
       ]
     },
@@ -137,7 +155,90 @@
         "g",
         "h"
       ]
-    }
+    },
+    {
+      "before": [
+        "<C-h>"
+      ],
+      "after": [
+        "<C-w>",
+        "h"
+      ]
+    },
+    {
+      "before": [
+        "<C-j>"
+      ],
+      "after": [
+        "<C-w>",
+        "j"
+      ]
+    },
+    {
+      "before": [
+        "<C-k>"
+      ],
+      "after": [
+        "<C-w>",
+        "k"
+      ]
+    },
+    {
+      "before": [
+        "<C-l>"
+      ],
+      "after": [
+        "<C-w>",
+        "l"
+      ]
+    },
+    {
+      "before": [
+        "<S-h>"
+      ],
+      "after": [
+        "g",
+        "T"
+      ]
+    },
+    {
+      "before": [
+        "<S-l>"
+      ],
+      "after": [
+        "g",
+        "t"
+      ]
+    },
+    {
+      "before": [
+        "[",
+        "b"
+      ],
+      "after": [
+        "g",
+        "T"
+      ]
+    },
+    {
+      "before": [
+        "]",
+        "b"
+      ],
+      "after": [
+        "g",
+        "t"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "w"
+      ],
+      "after": [
+        "*"
+      ]
+    },
   ],
   "vim.visualModeKeyBindings": [
     {

@@ -34,5 +34,30 @@
         "key": "alt+k",
         "command": "editor.action.moveLinesDownAction",
         "when": "editorTextFocus && !editorReadonly && vim.active && vim.mode == 'Visual' || vim.mode == 'VisualLine'"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "workbench.action.increaseViewHeight",
+        "when": "editorTextFocus && vim.active"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "workbench.action.decreaseViewHeight",
+        "when": "editorTextFocus && vim.active"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "workbench.action.decreaseViewWidth",
+        "when": "editorTextFocus && vim.active"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "workbench.action.increaseViewWidth",
+        "when": "editorTextFocus && vim.active"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "explorer.openToSide",
+        "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
     }
 ]
