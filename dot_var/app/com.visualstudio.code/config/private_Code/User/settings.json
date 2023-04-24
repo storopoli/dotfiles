@@ -256,6 +256,72 @@
       "commands": [
         "editor.action.outdentLines"
       ]
+    },
+    {
+      "before": [
+        "s"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "s"
+      ]
+    },
+    {
+      "before": [
+        "S"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "s"
+      ]
+    },
+    {
+      "before": [
+        "f"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "f"
+      ]
+    },
+    {
+      "before": [
+        "F"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "F"
+      ]
+    },
+    {
+      "before": [
+        "t"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "t"
+      ]
+    },
+    {
+      "before": [
+        "T"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "2",
+        "T"
+      ]
     }
   ],
   // Flatpak
