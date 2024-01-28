@@ -1,0 +1,29 @@
+# Vim/Emacs
+*~
+.*.swp
+
+# Mac
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# VSCode Workspace Folder
+.vscode/
+
+# Rust
+debug/
+target/
+
+# Python
+*.pyc
+*.egg
+*.out
+venv/
+**/**/__pycache__/
+
+# NodeJS/Web dev
+.env/
+node_modules
+.sass-cache
