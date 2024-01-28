@@ -1,6 +1,6 @@
 # brew install bash-completion zsh-completions zsh-autosuggestions zsh-syntax-highlighting
-# brew install fzf gnupg pinentry-mac
-# brew rustup nvm juliaup poetry yt-dlp lazygit gh
+# brew install fzf ripgrep fd gnupg pinentry-mac
+# brew install rustup nvm juliaup poetry yt-dlp lazygit gh
 # Enable colors and change prompt:
 autoload -U colors && colors # Load colors
 autoload -U promptinit
@@ -45,9 +45,13 @@ bindkey '^[^?' backward-kill-word
 # User specific environment variables
 export JULIA_NUM_THREADS=auto
 alias ls='ls --color=auto'
+alias lg=lazygit
 
 # brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ -f /opt/homebrew/bin/brew ]; then
+  brew_prefix=$(/opt/homebrew/bin/brew --prefix)
+  eval "$($brew_prefix/bin/brew shellenv)"
+fi
 
 # GPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -63,18 +67,32 @@ fi
 export PATH
 
 # Zsh functions
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-fpath+=/opt/homebrew/share/zsh/site-functions
+fpath+="$(brew --prefix)/share/zsh/site-functions"
 
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 # rustup
 source "$HOME/.cargo/env"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Zsh Plugins
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  elif [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  else
+    echo "zsh-autosuggestions not found"
+fi
+if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  else
+    echo "zsh-syntax-highlighting not found"
+fi

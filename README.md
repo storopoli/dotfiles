@@ -21,7 +21,7 @@ To use these dotfiles, follow these steps:
 3. Run the following command:
 
     ```bash
-    rsync -av --progress . $HOME --exclude '.git' --exclude 'LICENSE' --exclude 'README.md'
+    ./install.sh
     ```
 
 ## License
