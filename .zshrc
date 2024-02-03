@@ -15,7 +15,7 @@ export LC_ALL=en_US.UTF-8
 
 # History
 HISTSIZE=1000000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.bash_history
 SAVEHIST=1000000
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again
@@ -25,6 +25,7 @@ setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion
+setopt INC_APPEND_HISTORY        # Save history on every command not shell exit
 
 # Basic auto/tab complete:
 autoload -Uz compinit select-word-style
@@ -35,16 +36,22 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots) # Include hidden files.
 
-# Alt + left/right
-# check out: https://superuser.com/a/1307657
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;3D" backward-word
-# Alt + backspace
-bindkey '^[^?' backward-kill-word
+# Ctrl + left/right
+# check out: https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+# Ctrl + backspace/delete
+# check out: https://unix.stackexchange.com/questions/12787/zsh-kill-ctrl-backspace-ctrl-delete
+bindkey '^H' backward-kill-word
+bindkey '^[[3;' kill-word
 
 # User specific environment variables
 export JULIA_NUM_THREADS=auto
 alias ls='ls --color=auto'
+alias l='ls -CF'
+alias ll='ls -l'
+alias la='ls -A'
+alias lla='ls -la'
 alias lg=lazygit
 
 # brew
