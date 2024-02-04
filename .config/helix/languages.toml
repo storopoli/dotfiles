@@ -1,0 +1,48 @@
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer"]
+
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[language-server.rust-analyzer.config.cargo]
+features = "all"
+
+[[language]]
+name = "python"
+language-servers = ["pyright", "ruff-lsp"]
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[language-server.ruff-lsp]
+command = "ruff-lsp"
+
+[[language]]
+name = "toml"
+language-servers = ["taplo"]
+formatter = { command = "taplo", args = ["fmt", "-"] }
+auto-format = true
+
+[[language]]
+name = "yaml"
+language-servers = ["yaml-language-server"]
+
+[language-server.yaml-language-server.config.yaml]
+format = { enable = true }
+validation = true
+
+[language-server.yaml-language-server.config.yaml.schemas]
+"https=//raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" = "docker-compose.yaml"
+"https=//json.schemastore.org/github-workflow.json" = ".github/workflows/*.yaml"
+"https=//json.schemastore.org/github-action.json" = ".github/actions/*/action.yaml"
+
+[[language]]
+name = "nix"
+language-servers = ["nil"]
+formatter = { command = "nixpkgs-fmt" }
+auto-format = true
+
+[[language]]
+name = "fish"
+formatter = { command = "fish_indent" }
+auto-format = true
