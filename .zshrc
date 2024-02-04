@@ -53,6 +53,10 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -la'
 alias lg=lazygit
+alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip"
+alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
+alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
+alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
 
 # brew
 if [ -f /opt/homebrew/bin/brew ]; then
