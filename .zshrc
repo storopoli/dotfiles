@@ -1,6 +1,3 @@
-# brew install bash-completion zsh-completions zsh-autosuggestions zsh-syntax-highlighting
-# brew install fzf ripgrep fd gnupg pinentry-mac
-# brew install rustup nvm juliaup poetry yt-dlp lazygit gh
 # Enable colors and change prompt:
 autoload -U colors && colors # Load colors
 autoload -U promptinit
@@ -45,7 +42,12 @@ bindkey "^[[1;5D" backward-word
 bindkey '^H' backward-kill-word
 bindkey '^[[3;' kill-word
 
+# VIM keybindings
+bindkey -v
+
 # User specific environment variables
+export EDITOR=nvim
+export VISUAL=nvim
 export JULIA_NUM_THREADS=auto
 alias ls='ls --color=auto'
 alias l='ls -CF'
@@ -84,6 +86,9 @@ fpath+="$(brew --prefix)/share/zsh/site-functions"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
+# Zoxide
+eval "$(zoxide init zsh)"
+
 # rustup
 source "$HOME/.cargo/env"
 
@@ -91,6 +96,16 @@ source "$HOME/.cargo/env"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# yazi
+function ya() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
