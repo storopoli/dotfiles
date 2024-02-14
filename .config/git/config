@@ -62,6 +62,11 @@
 	version = 2
 [commit]
 	gpgsign = true
+[branch]
+	sort = -committerdate
 [credential]
 	helper = cache
+[rerere]
+	enabled = true
+	autoUpdate = true
 
