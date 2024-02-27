@@ -45,7 +45,10 @@
 [pull]
 	ff = only
 [push]
-	default = simple
+	default = current
+	autoSetupRemote = true
+	followtags = true
+	useForceIfIncludes = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -53,11 +56,16 @@
 	required = true
 [help]
 	autocorrect = 1
+[status]
+	submoduleSummary = true
+[submodule]
+	recurse = true
 [github]
 	user = storopoli
 [diff]
-	algorithm = patience
+	algorithm = histogram
 	compactionHeuristic = true
+	submodule = log
 [protocol]
 	version = 2
 [commit]
@@ -66,6 +74,12 @@
 	sort = -committerdate
 [credential]
 	helper = cache
+[log]
+	date = iso
+[rebase]
+	autosquash = true
+	autostash = true
+	updateRefs = true
 [rerere]
 	enabled = true
 	autoUpdate = true
