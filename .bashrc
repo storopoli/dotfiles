@@ -21,6 +21,7 @@ alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
 alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
 alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
+alias testnet="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 
 # GPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
