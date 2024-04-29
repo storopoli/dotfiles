@@ -19,9 +19,17 @@ alias lla='ls -la'
 alias lg=lazygit
 alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip"
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
+alias testnet="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
 alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
-alias testnet="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+function ytp() {
+    local playlist_id="$1"
+    local yturl="https://www.youtube.com/playlist?list=$playlist_id"
+
+    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
+    chmod +x command.sh
+    . command.sh
+}
 
 # GPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
