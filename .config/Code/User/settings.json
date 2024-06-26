@@ -7,18 +7,29 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
+  "explorer.confirmDelete": false,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "remote.autoForwardPortsSource": "hybrid",
   // Git
-  "git.autofetch": true,
   "git.autorefresh": true,
+  "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableCommitSigning": true,
-  "dotfiles.repository": "https://github.com/storopoli/dotfiles",
+  "[git-commit]": {
+    "editor.rulers": [72, 50],
+    "editor.wordWrap": "off"
+  },
   "github.gitProtocol": "ssh",
   "gitlens.telemetry.enabled": false,
-  "gitlens.plusFeatures.enabled": false,
   "gitlens.showWelcomeOnInstall": false,
+  "gitlens.launchpad.indicator.enabled": false,
+  "gitlens.ai.experimental.provider": "openai",
+  "gitlens.ai.experimental.openai.model": "gpt-4-turbo-preview",
+  "settingsSync.ignoredSettings": ["git.autofetch"],
+  "githubRepositories.autoFetch.enabled": false,
+  "github.copilot.editor.enableAutoCompletions": true,
   // Copilot
   "github.copilot.enable": {
     "*": true,
@@ -44,6 +55,10 @@
   },
   // Vim Keybindings
   "vim.normalModeKeyBindings": [
+    {
+      "before": ["g", "h"],
+      "commands": ["editor.action.showDefinitionPreviewHover"]
+    },
     {
       "before": ["leader", "w"],
       "commands": ["workbench.action.files.save"]
@@ -84,6 +99,20 @@
   // Rust
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.checkOnSave": true,
+  // Nix
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.serverSettings": {
+    // settings for 'nil' LSP
+    "nil": {
+      "diagnostics": {
+        "ignored": ["unused_binding", "unused_with"]
+      },
+      "formatting": {
+        "command": ["nixpkgs-fmt"]
+      }
+    }
+  },
   // Julia
   "julia.enableTelemetry": false,
   "julia.enableCrashReporter": false,
@@ -91,6 +120,10 @@
   "julia.execution.resultType": "both",
   "julia.symbolCacheDownload": true,
   "terminal.integrated.commandsToSkipShell": ["language-julia.interrupt"],
+  // Spelling
+  "cSpell.enableFiletypes": ["typst"],
+  "cSpell.userWords": [],
+  "cSpell.ignoreWords": [],
   // Formatters
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -118,5 +151,8 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   }
 }
