@@ -43,6 +43,9 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
 fi
 export PATH
 
+# VIM
+[[ "$(command -v vim)" ]] && export EDITOR=vim
+
 # FZF
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
