@@ -2,8 +2,8 @@
 -- DEPENDENCIES
 -- neovim nodejs ripgrep rust-analyzer
 
--- 21 Plugins
--- ~33ms startup
+-- 22 Plugins
+-- ~20ms startup
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
@@ -49,9 +49,8 @@ vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 
 -- Time in milliseconds to wait for a mapped sequence to complete
-vim.o.timeoutlen = 50
+vim.o.timeoutlen = 500
 vim.o.ttyfast = true
-vim.o.updatetime = 50
 
 -- No wrap
 vim.o.wrap = false
@@ -70,7 +69,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Decrease update time
-vim.o.updatetime = 250
+vim.o.updatetime = 500
 vim.wo.signcolumn = "yes"
 
 -- color column
@@ -269,19 +268,50 @@ require("lazy").setup({
             { "<leader>sT", "<CMD>Telescope git_stash<CR>" },
         },
         opts = {},
+        config = function()
+            -- See `:help telescope` and `:help telescope.setup()`
+            require("telescope").setup({
+                defaults = {
+                    mappings = {
+                        i = {
+                            ["<C-n>"] = "move_selection_next",
+                            ["<C-p>"] = "move_selection_previous",
+                            ["<C-f>"] = function(...)
+                                return require("telescope.actions").preview_scrolling_down(...)
+                            end,
+                            ["<C-b>"] = function(...)
+                                return require("telescope.actions").preview_scrolling_up(...)
+                            end,
+                        },
+                        n = {
+                            ["q"] = function(...)
+                                return require("telescope.actions").close(...)
+                            end,
+                        },
+                    },
+                },
+            })
+        end,
     },
     {
         -- LSP Configuration & Plugins
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        version = false, -- last release is way too old
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
             "hrsh7th/nvim-cmp", -- Autocompletion plugin
             "hrsh7th/cmp-buffer", -- nvim-cmp source for buffer words
             "hrsh7th/cmp-path", -- nvim-cmp source for filesystem paths
             "hrsh7th/cmp-nvim-lua", -- nvim-cmp source for neovim Lua API
-            "L3MON4D3/LuaSnip", -- LuaSnip snitppets plugins
-            "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
+            "petertriho/cmp-git", -- nvim-cmp source for git
+            {
+              "garymjr/nvim-snippets",
+              opts = {
+                friendly_snippets = true,
+              },
+              dependencies = { "rafamadriz/friendly-snippets" },
+            },
             -- Copilot
             {
                 "zbirenbaum/copilot.lua",
@@ -341,7 +371,7 @@ require("lazy").setup({
                     vim.keymap.set("n", "<leader>ss", require("telescope.builtin").lsp_dynamic_workspace_symbols)
                     -- See `:help K` for why this keymap
                     vim.keymap.set("n", "K", vim.lsp.buf.hover)
-                    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+                    -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
                     -- Lesser used LSP functionality
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
                     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition)
@@ -349,7 +379,7 @@ require("lazy").setup({
                     vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end)
                     -- The following autocommand is used to enable inlay hints in your
                     -- code, if the language server you are using supports them
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
                     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
                         vim.keymap.set("n", "<leader>th", function()
                             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -361,19 +391,25 @@ require("lazy").setup({
             -- Add additional capabilities supported by nvim-cmp
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-            -- luasnip setup
-            local luasnip = require("luasnip")
-            require("luasnip.loaders.from_vscode").lazy_load()
-            luasnip.config.setup({})
             -- nvim-cmp setup
             local cmp = require("cmp")
+            local feedkey = function(key, mode)
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+            end
+            local has_words_before = function()
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0
+                    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s")
+                      == nil
+            end
             cmp.setup({
                 completion = {
                     completeopt = "menu,menuone,noinsert",
                 },
+                preselect = cmp.PreselectMode.Item,
                 snippet = {
                     expand = function(args)
-                        luasnip.lsp_expand(args.body)
+                        vim.snippet.expand(args.body)
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
@@ -382,21 +418,29 @@ require("lazy").setup({
                   ["<C-n>"] = cmp.mapping.select_next_item(),
                   ["<C-p>"] = cmp.mapping.select_prev_item(),
                   ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                  ['<C-l>'] = cmp.mapping(function()
-                    if luasnip.expand_or_locally_jumpable() then
-                      luasnip.expand_or_jump()
+                  ['<C-l>'] = cmp.mapping(function(fallback)
+                    if vim.snippet.active({ direction = 1 }) then
+                      feedkey("<cmd>lua vim.snippet.jump(1)<CR>", "")
+                    elseif cmp.visible() then
+                      cmp.select_next_item()
+                    elseif has_words_before() then
+                      cmp.complete()
+                    else
+                      fallback()
                     end
                   end, { 'i', 's' }),
                   ['<C-h>'] = cmp.mapping(function()
-                    if luasnip.locally_jumpable(-1) then
-                      luasnip.jump(-1)
+                    if vim.snippet.active({ direction = -1 }) then
+                      feedkey("<cmd>lua vim.snippet.jump(-1)<CR>", "")
+                    elseif cmp.visible() then
+                      cmp.select_prev_item()
                     end
                   end, { 'i', 's' }),
                 }),
                 sources = {
                     { name = "copilot", priority = 100 },
                     { name = "nvim_lsp" },
-                    { name = "luasnip" },
+                    { name = "snippets" },
                     { name = "path" },
                 },
             })
