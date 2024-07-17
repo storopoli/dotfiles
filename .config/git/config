@@ -16,7 +16,6 @@
 [core]
 	autocrlf = input
 	safecrlf = true
-	editor = vim
 [alias]
 	acp = "!f() { git add . && git commit -m \"$@\" && git push origin HEAD; }; f"
 	a = add
