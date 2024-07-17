@@ -43,8 +43,9 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
 fi
 export PATH
 
-# VIM
+# VIM/NVIM
 [[ "$(command -v vim)" ]] && export EDITOR=vim
+[[ "$(command -v nvim)" ]] && export EDITOR=nvim
 
 # FZF
 source /usr/share/fzf/key-bindings.bash
