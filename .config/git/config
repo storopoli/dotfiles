@@ -1,7 +1,7 @@
 [user]
 	name = Jose Storopoli
 	email = jose@storopoli.io
-	signingKey = 0x01BE853A206518CC!
+	signingKey = 0x03A1D5FA17AECEEB
 [init]
 	defaultBranch = main
 [tag]
