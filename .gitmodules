@@ -1,3 +1,6 @@
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = git@gist.github.com:ff55e50f7292c4b1806f6c3469781722.git
+[submodule ".vimrc"]
+	path = .vimrc
+	url = git@gist.github.com:b5b5c8ec756e88296ee3bd0bc1539fab.git
