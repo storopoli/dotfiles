@@ -48,7 +48,6 @@ bindkey -v
 # User specific environment variables
 export EDITOR=nvim
 export VISUAL=nvim
-export JULIA_NUM_THREADS=auto
 alias ls='ls --color=auto'
 alias l='ls -CF'
 alias ll='ls -l'
@@ -58,13 +57,25 @@ alias lg=lazygit
 alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip"
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
 alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
+alias ytv="yt-dlp --add-metadata -i --restrict-filenames"
 alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
+function ytp() {
+    local playlist_id="$1"
+    local yturl="https://www.youtube.com/playlist?list=$playlist_id"
+
+    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
+    chmod +x command.sh
+    . command.sh
+}
 
 # brew
 if [ -f /opt/homebrew/bin/brew ]; then
   brew_prefix=$(/opt/homebrew/bin/brew --prefix)
   eval "$($brew_prefix/bin/brew shellenv)"
 fi
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
 
 # GPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -82,30 +93,22 @@ export PATH
 # Zsh functions
 fpath+="$(brew --prefix)/share/zsh/site-functions"
 
+# Vim/Nvim
+[[ "$(command -v vim)" ]] && export EDITOR=vim
+[[ "$(command -v nvim)" ]] && export EDITOR=nvim
+
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-# Zoxide
-eval "$(zoxide init zsh)"
+# atuin
+[[ "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
+
+# direnv
+[[ "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 # rustup
 source "$HOME/.cargo/env"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# yazi
-function ya() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
 
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then

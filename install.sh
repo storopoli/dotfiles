@@ -6,7 +6,6 @@ if [ -n "$CODESPACES" ]; then
   # chmod +x ./scripts/install-codespaces.sh
   # . ./scripts/install-codespaces.sh
 else
-    . ./scripts/utils.sh
     os_name=$(uname)
     if [[ "$os_name" == "Darwin" ]]; then
       echo "***Loading MaCOS Dotfiles***"

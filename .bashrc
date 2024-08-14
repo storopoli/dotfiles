@@ -10,7 +10,6 @@ set -o vi
 # User specific environment variables
 export EDITOR=nvim
 export VISUAL=nvim
-export JULIA_NUM_THREADS=auto
 alias ls='ls --color=auto'
 alias l='ls -CF'
 alias ll='ls -l'
@@ -21,6 +20,7 @@ alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
 alias testnet="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
+alias ytv="yt-dlp --add-metadata -i --restrict-filenames"
 alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
 function ytp() {
     local playlist_id="$1"
@@ -43,7 +43,7 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
 fi
 export PATH
 
-# VIM/NVIM
+# Vim/Nvim
 [[ "$(command -v vim)" ]] && export EDITOR=vim
 [[ "$(command -v nvim)" ]] && export EDITOR=nvim
 
@@ -51,15 +51,11 @@ export PATH
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
 
-# Zoxide
-eval "$(zoxide init bash)"
+# atuin
+[[ "$(command -v atuin)" ]] && eval "$(atuin init bash)"
 
-# yazi
-function ya() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ "$cwd" != "" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
+# direnv
+[[ "$(command -v direnv)" ]] && eval "$(direnv hook bash)"
+
+# rustup
+source "$HOME/.cargo/env"
