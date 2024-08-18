@@ -58,6 +58,7 @@ brew install \
 	fzf \
 	ripgrep \
 	fd \
+	jq \
 	yt-dlp \
 	lazygit \
 	gh \
@@ -66,9 +67,11 @@ brew install \
 	typst \
 	just \
 	zellij \
+	hugo \
 	# GPG
 	gnupg \
 	pinentry-mac \
+	ykman \
 	# Neovim
 	neovim \
 	node \ # yeah neovim needs this crap
@@ -77,7 +80,12 @@ brew install \
 	rust-analyzer \
 	bacon \
 	cargo-nextest \
-	cargo-watch
+	cargo-watch \
+	# Python
+	uv \
+	poetry \
+	ruff \
+	pyright
 brew services start tor
 
 # brew casks
