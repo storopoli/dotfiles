@@ -100,6 +100,7 @@ brew install --cask transmission
 brew install --cask cryptomator
 brew install --cask karabiner-elements
 brew install --cask dangerzone
+brew install --cask yubico-yubikey-manager
 #brew install --cask lulu # just hardening the firewall is enough now
 #brew install --cask stats # maybe too much bloat
 #brew install --cask notunes # maybe I can get away with iTunes and some mp3s
