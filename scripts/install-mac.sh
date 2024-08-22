@@ -85,7 +85,17 @@ brew install \
 	uv \
 	poetry \
 	ruff \
-	pyright
+	pyright \
+	# LSPs
+	vscode-langservers-extracted \
+	yaml-language-server \
+	taplo \
+	typescript-language-server \
+	marksman \
+	lua-language-server \
+	bash-language-server \
+	shfmt \
+	codespell
 brew services start tor
 
 # brew casks
