@@ -113,10 +113,10 @@ brew install --cask font-sauce-code-pro-nerd-font
 brew install --cask font-juliamono
 
 # Install FZF completions
-$(brew --prefix)/opt/fzf/install --all --key-bindings --completion
+"$(brew --prefix)/opt/fzf/install" --all --key-bindings --completion
 
 # Set dotfiles
-rm -rf ~/.config/git  ~/.zshrc* ~/.zprofile* ~/.zsh_history* ~/.zsh_sessions/ ~/.zshrc ~/.zshenv
+rm -rf ~/.config/git ~/.zshrc* ~/.zprofile* ~/.zsh_history* ~/.zsh_sessions/ ~/.zshrc ~/.zshenv
 cp -r .config/git ~/.config/git
 cp -r .config/nvim ~/.config/nvim
 cp .zshrc ~/.zshrc
@@ -124,7 +124,7 @@ cp .ssh/config ~/.ssh/config
 cp .ssh/know_hosts ~/.ssh/know_hosts
 cp .gnupg/gpg.conf ~/.gnupg/gpg.conf
 cp .gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-echo pinentry-program $(which pinentry-mac) >> ~/.gnupg/gpg-agent.conf
+echo pinentry-program "$(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
 
 echo "Done!"
 echo "Don't forget to enable filevault and lockdown mode!"
