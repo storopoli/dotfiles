@@ -15,6 +15,22 @@ echo "Prevent built-in software as well as code-signed, downloaded software from
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off
 
+# Hardening the system
+echo "Setting the screen to lock as soon as the screensaver starts."
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+echo "Expose hidden files and folders."
+defaults write com.apple.finder AppleShowAllFiles -bool true
+chflags nohidden ~/Library
+echo "Show all filename extensions."
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+echo "Fuck iCloud"
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+echo "Fuck Bonjour, Airplay and Airprint"
+sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
+echo "Don't allow group/other read access to your stuff"
+sudo launchctl config user umask 077
+
 # Recurively clone submodules
 git submodule update --init --recursive
 
