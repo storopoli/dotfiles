@@ -115,8 +115,10 @@ brew install --cask yubico-yubikey-manager
 #brew install --cask stats # maybe too much bloat
 #brew install --cask notunes # maybe I can get away with iTunes and some mp3s
 #brew install --cask aural # maybe I can get away with iTunes and some mp3s
+#brew install --cask sparrow
+#brew install --cask santa
 
-# brew font
+# brew fonts
 echo "Installing Homebrew Casks."
 brew install --cask font-monaspace-nerd-font
 brew install --cask font-sauce-code-pro-nerd-font
@@ -131,10 +133,10 @@ cp -r .config/git ~/.config/git
 cp -r .config/nvim ~/.config/nvim
 cp .zshrc ~/.zshrc
 cp .ssh/config ~/.ssh/config
-cp .ssh/know_hosts ~/.ssh/know_hosts
+cp .ssh/known_hosts ~/.ssh/know_hosts
 cp .gnupg/gpg.conf ~/.gnupg/gpg.conf
 cp .gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-echo pinentry-program "$(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
+echo "pinentry-program $(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
 
 echo "Done!"
 echo "Don't forget to enable filevault and lockdown mode!"

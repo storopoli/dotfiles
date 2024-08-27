@@ -94,8 +94,8 @@ export PATH
 fpath+="$(brew --prefix)/share/zsh/site-functions"
 
 # Vim/Nvim
-[[ "$(command -v vim)" ]] && export EDITOR=vim
-[[ "$(command -v nvim)" ]] && export EDITOR=nvim
+[[ "$(command -v vim)" ]] && export EDITOR=vim && export VISUAL=vim
+[[ "$(command -v nvim)" ]] && export EDITOR=nvim && export VISUAL=nvim
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
