@@ -213,7 +213,47 @@ let g:lsp_inlay_hints_mode = {
 \}
 
 augroup lsp_register_server
-  au FileType python let g:lsp_settings_filetype_rust = ['rust-analyzer']
+  au FileType rust let g:lsp_settings_filetype_rust = ['rust-analyzer']
+  " Configure the pyright and ruff-lsp servers
+  au FileType python let g:lsp_settings_filetype_python = ['ruff', 'pyright-langserver']
+  au FileType python let g:lsp_settings = {
+    \  'ruff': { 
+    \    'disabled': v:false,
+    \  },
+    \  'pyright-langserver': {
+    \    'disabled': v:false,
+    \    'workspace_config': {
+    \      'python': {
+    \        'analysis': {
+    \          'ignore': '*',
+    \          'useLibraryCodeForTypes': v:true,
+    \        }
+    \      }
+    \    }
+    \  }}
+  au FileType toml let g:lsp_settings = {'taplo-lsp': {'cmd': ['taplo', 'lsp', 'stdio']}}
+  au FileType yaml let g:lsp_settings = {'yaml-language-server': {
+    \ 'workspace_config': {'yaml': {
+    \   'validate': v:true,
+    \   'hover': v:true,
+    \   'completion': v:true,
+    \   'format': {'enable': v:true},
+    \   'schemas':{
+    \     'kubernetes':'*.yaml',
+    \     'https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json': 'docker-compose.yaml',
+    \     'https://json.schemastore.org/github-workflow.json': '.github/workflows/*.yaml',
+    \     'https://json.schemastore.org/github-action.json': '.github/actions/*/action.yaml',
+    \   }}},
+    \ }}
+  au FileType markdown let g:lsp_settings_filetype_markdown = ['marksman']
+  au FileType json let g:lsp_settings_filetype_json = ['json-languageserver']
+  au FileType html let g:lsp_settings_filetype_html = ['html-languageserver']
+  au FileType css let g:lsp_settings_filetype_css = ['css-languageserver']
+  au FileType javascript let g:lsp_settings_filetype_javascript = ['typescript-language-server']
+  au FileType lua let g:lsp_settings_filetype_lua = ['sumneko-lua-language-server']
+  au FileType c let g:lsp_settings_filetype_c = ['clangd']
+  au FileType cpp let g:lsp_settings_filetype_cpp = ['clangd']
+  au FileType bash let g:lsp_settings_filetype_bash = ['bash-language-server']
 augroup END
 
 function! LspToggle()
