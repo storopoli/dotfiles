@@ -143,6 +143,7 @@ nnoremap [q :cprev<cr>zz
 
 " netrw
 nnoremap <c-p> :Lexplore<cr>
+nnoremap <c-q> :Lexpore %:h<cr> " in the current file's directory
 function! NetrwMapping()
   nmap <buffer> n % "edit new file
   nmap <buffer> r R "rename file
@@ -153,6 +154,8 @@ function! NetrwMapping()
   nmap <buffer> P <C-w>z "close the preview window
   nmap <buffer> L <cr>:Lexplore<cr> "open a file and close netrw
   nmap <buffer> <leader>q :Lexplore<cr> "close netrw
+  nmap <buffer> <c-p> :Lexplore<cr> " close netrw
+  nmap <buffer> <c-q> :Lexplore<cr> " close netrw
 endfunction
 
 augroup netrw_mapping
