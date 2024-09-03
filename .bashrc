@@ -61,3 +61,6 @@ fi
 
 # rustup
 [[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
+
+# sccache
+[[ "$(command -v sccache)" ]] && export RUSTC_WRAPPER=sccache

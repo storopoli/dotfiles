@@ -97,6 +97,7 @@ brew install \
 	bacon \
 	cargo-nextest \
 	cargo-watch \
+	sccache \
 	# Python
 	uv \
 	poetry \

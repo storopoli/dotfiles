@@ -110,6 +110,9 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 # rustup
 [[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
 
+# sccache
+[[ "$(command -v sccache)" ]] && export RUSTC_WRAPPER=sccache
+
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
