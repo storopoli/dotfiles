@@ -108,7 +108,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 # rustup
-source "$HOME/.cargo/env"
+[[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
 
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then

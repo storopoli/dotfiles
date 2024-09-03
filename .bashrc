@@ -48,8 +48,10 @@ export PATH
 [[ "$(command -v nvim)" ]] && export EDITOR=nvim
 
 # FZF
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
+if [[ "$(command -v fzf)" ]]; then
+	source /usr/share/fzf/key-bindings.bash
+	source /usr/share/fzf/completion.bash
+fi
 
 # atuin
 [[ "$(command -v atuin)" ]] && eval "$(atuin init bash)"
@@ -58,4 +60,4 @@ source /usr/share/fzf/completion.bash
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook bash)"
 
 # rustup
-source "$HOME/.cargo/env"
+[[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
