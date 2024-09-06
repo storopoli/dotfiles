@@ -4,9 +4,6 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 export LANG=en
 export LC_ALL=en_US.UTF-8
 
-# VIM keybindings
-set -o vi
-
 # User specific environment variables
 export EDITOR=nvim
 export VISUAL=nvim

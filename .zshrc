@@ -42,12 +42,9 @@ bindkey "^[[1;5D" backward-word
 bindkey '^H' backward-kill-word
 bindkey '^[[3;' kill-word
 
-# VIM keybindings
-bindkey -v
-
 # User specific environment variables
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 alias ls='ls --color=auto'
 alias l='ls -CF'
 alias ll='ls -l'
