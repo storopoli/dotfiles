@@ -1,5 +1,8 @@
 {
   "telemetry.telemetryLevel": "off", // Most important
+  "editor.fontFamily": "'Monaspace Neon', 'MesloLGL Nerd Font Mono', 'Droid Sans Mono', 'monospace', monospace",
+  "editor.fontLigatures": "'calt', 'liga', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09'",
+  "terminal.integrated.fontFamily": "'Monaspace Neon', 'MesloLGL Nerd Font Mono', 'Droid Sans Mono', 'monospace', monospace",
   "window.restoreWindows": "none",
   "window.titleBarStyle": "custom",
   "keyboard.dispatch": "keyCode",
@@ -14,7 +17,7 @@
   "remote.autoForwardPortsSource": "hybrid",
   // Git
   "git.autorefresh": true,
-  "git.autofetch": true,
+  "git.autofetch": false,
   "git.confirmSync": false,
   "git.enableCommitSigning": true,
   "[git-commit]": {
@@ -29,7 +32,12 @@
   "gitlens.ai.experimental.openai.model": "gpt-4-turbo-preview",
   "settingsSync.ignoredSettings": ["git.autofetch"],
   "githubRepositories.autoFetch.enabled": false,
+  "githubPullRequests.fileListLayout": "tree",
   "github.copilot.editor.enableAutoCompletions": true,
+  // Devcontainer
+  //"docker.environment": {
+  //  "DOCKER_HOST": "ssh://storopoli@duda.ai:2222"
+  //},
   // Copilot
   "github.copilot.enable": {
     "*": true,
@@ -38,6 +46,7 @@
     "scminput": false
   },
   // Vim
+  "vim.timeout": 1000,
   "vim.incsearch": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
@@ -53,34 +62,7 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
-  // Vim Keybindings
-  "vim.normalModeKeyBindings": [
-    {
-      "before": ["g", "h"],
-      "commands": ["editor.action.showDefinitionPreviewHover"]
-    },
-    {
-      "before": ["leader", "w"],
-      "commands": ["workbench.action.files.save"]
-    },
-    {
-      "before": ["leader", "q"],
-      "commands": ["workbench.action.closeActiveEditor"]
-    },
-    {
-      "before": ["leader", "Q"],
-      "commands": ["workbench.action.closeAllEditors"]
-    },
-    {
-      "before": ["leader", "leader"],
-      "commands": ["workbench.action.quickOpen"]
-    }
-  ],
   "vim.visualModeKeyBindings": [
-    {
-      "before": ["leader", "y"],
-      "commands": ["editor.action.clipboardCopyAction"]
-    },
     {
       "before": [">"],
       "commands": ["editor.action.indentLines"]
@@ -97,8 +79,13 @@
     }
   ],
   // Rust
-  "rust-analyzer.check.command": "clippy",
+  // "rust-analyzer.check.command": "clippy", // maybe this is too costly
+  "rust-analyzer.check.command": "check",
   "rust-analyzer.checkOnSave": true,
+  // "rust-analyzer.check.features": "all", // maybe this is too costly
+  "[rust]": {
+    "editor.rulers": [80]
+  },
   // Nix
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
@@ -153,6 +140,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.rulers": [80]
   }
 }
