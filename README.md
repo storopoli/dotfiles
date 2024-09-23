@@ -1,6 +1,8 @@
 # Dotfiles
 
-This repository contains my personal dotfiles. Dotfiles are configuration files used to customize various aspects of your development environment.
+![CLI meme](cli-meme.jpg)
+
+This repository contains my very minimalistic dotfiles.
 
 ## Installation
 
