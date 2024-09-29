@@ -34,9 +34,6 @@ sudo launchctl config user umask 077
 # Recurively clone submodules
 git submodule update --init --recursive
 
-# Uninstall brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-
 # Install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -61,10 +58,10 @@ export HOMEBREW_CASK_OPTS=--require-sha
 
 # brew formulas
 echo "Installing Homebrew Formulas."
-brew install
-# basics
-git \
+brew install \
+    git \
     curl \
+    rsync \
     nmap \
     ffmpeg \
     bash-completion \
@@ -75,44 +72,50 @@ git \
     ripgrep \
     fd \
     jq \
+    yq \
+    htmlq \
     yt-dlp \
     lazygit \
     gh \
     tor \
     shellcheck \
-    typst \
     just \
     zellij \
-    hugo
-# GPG
-gnupg \
+    eza \
+    dust \
+    hugo \
+    gnupg \
     pinentry-mac \
-    ykman
-# Neovim
-neovim \
-    node \ # yeah neovim needs this crap
-# Rust
-rustup \
-    rust-analyzer \
-    bacon \
+    ykman \
+    colima \
+    helix \
+    node \
+    deno \
+    yarn \
+    go \
+    rustup \
     cargo-nextest \
-    cargo-watch \
-    sccache
-# Python
-uv \
+    sccache \
+    uv \
+    rye \
     poetry \
     ruff \
-    pyright
-# LSPs
-vscode-langservers-extracted \
+    pyright \
+    zig \
+    zls \
+    vscode-langservers-extracted \
     yaml-language-server \
     taplo \
     typescript-language-server \
     marksman \
+    typst \
+    tinymist \
+    typstyle \
     lua-language-server \
     bash-language-server \
     shfmt \
-    codespell
+    codespell \
+    tealdeer
 brew services start tor
 
 # brew casks
@@ -125,21 +128,14 @@ brew install --cask iina
 brew install --cask mullvadvpn
 brew install --cask transmission
 brew install --cask cryptomator
-brew install --cask karabiner-elements
 brew install --cask dangerzone
 brew install --cask yubico-yubikey-manager
-#brew install --cask lulu # just hardening the firewall is enough now
-#brew install --cask stats # maybe too much bloat
-#brew install --cask notunes # maybe I can get away with iTunes and some mp3s
-#brew install --cask aural # maybe I can get away with iTunes and some mp3s
-#brew install --cask sparrow
-#brew install --cask santa
+brew install --cask tailscale
+brew install --cask localsend
 
 # brew fonts
 echo "Installing Homebrew Casks."
-brew install --cask font-monaspace-nerd-font
-brew install --cask font-sauce-code-pro-nerd-font
-brew install --cask font-juliamono
+brew install --cask font-monaspace
 
 # Install FZF completions
 "$(brew --prefix)/opt/fzf/install" --all --key-bindings --completion
@@ -167,6 +163,11 @@ chmod 644 "$HOME"/.ssh/known_hosts
 chmod 600 "$HOME"/.gnupg/*
 
 echo "pinentry-program $(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
+
+# rustup
+echo "Installing rustup components"
+rustup default stable
+rustup component add rustfmt rust-analyzer rustc clippy
 
 echo "Done!"
 echo "Don't forget to enable filevault and lockdown mode!"

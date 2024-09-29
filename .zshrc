@@ -14,15 +14,15 @@ export LC_ALL=en_US.UTF-8
 HISTSIZE=1000000
 HISTFILE=~/.bash_history
 SAVEHIST=1000000
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate
-setopt HIST_FIND_NO_DUPS         # Do not display a line previously found
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file
-setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion
-setopt INC_APPEND_HISTORY        # Save history on every command not shell exit
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history
+setopt HIST_IGNORE_DUPS       # Don't record an entry that was just recorded again
+setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate
+setopt HIST_FIND_NO_DUPS      # Do not display a line previously found
+setopt HIST_IGNORE_SPACE      # Don't record an entry starting with a space
+setopt HIST_SAVE_NO_DUPS      # Don't write duplicate entries in the history file
+setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks before recording entry
+setopt HIST_VERIFY            # Don't execute immediately upon history expansion
+setopt INC_APPEND_HISTORY     # Save history on every command not shell exit
 
 # Basic auto/tab complete:
 autoload -Uz compinit select-word-style
@@ -50,6 +50,13 @@ alias l='ls -CF'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -la'
+# eza
+[[ "$(command -v eza)" ]] &&
+    alias ls='eza' &&
+    alias l='eza' &&
+    alias ll='eza -l' &&
+    alias la='eza -A' &&
+    alias lla='eza -la'
 alias lg=lazygit
 alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip"
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
@@ -57,34 +64,34 @@ alias yt="yt-dlp --add-metadata -i --format mp4 --restrict-filenames"
 alias ytv="yt-dlp --add-metadata -i --restrict-filenames"
 alias yta="yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames"
 function ytp() {
-  local playlist_id="$1"
-  local yturl="https://www.youtube.com/playlist?list=$playlist_id"
+    local playlist_id="$1"
+    local yturl="https://www.youtube.com/playlist?list=$playlist_id"
 
-  printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
-  chmod +x command.sh
-  . command.sh
+    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
+    chmod +x command.sh
+    . command.sh
 }
 
 rustup-cleanup() {
-  if ! command -v rustup &>/dev/null; then
-    echo "rustup not found"
-    return 1
-  fi
-  # rustup returns an echo saying "no installed toolchains"
-  if $(rustup toolchain list | grep -q 'no installed toolchains'); then
-    echo "no installed toolchains"
+    if ! command -v rustup &>/dev/null; then
+        echo "rustup not found"
+        return 1
+    fi
+    # rustup returns an echo saying "no installed toolchains"
+    if $(rustup toolchain list | grep -q 'no installed toolchains'); then
+        echo "no installed toolchains"
+        rustup show
+        return 0
+    fi
+    rustup toolchain list | grep -E 'stable|nightly' | awk '{print $1}' | xargs -n1 rustup toolchain uninstall
     rustup show
     return 0
-  fi
-  rustup toolchain list | grep -E 'stable|nightly' | awk '{print $1}' | xargs -n1 rustup toolchain uninstall
-  rustup show
-  return 0
 }
 
 # brew
 if [ -f /opt/homebrew/bin/brew ]; then
-  brew_prefix=$(/opt/homebrew/bin/brew --prefix)
-  eval "$($brew_prefix/bin/brew shellenv)"
+    brew_prefix=$(/opt/homebrew/bin/brew --prefix)
+    eval "$($brew_prefix/bin/brew shellenv)"
 fi
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
@@ -97,9 +104,8 @@ export GPG_TTY=$(tty)
 # System binaries
 PATH="/usr/local/bin:$PATH"
 # Local binaries
-if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]
-then
-  PATH="$HOME/.local/bin:$PATH"
+if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+    PATH="$HOME/.local/bin:$PATH"
 fi
 export PATH
 
@@ -109,6 +115,8 @@ fpath+="$(brew --prefix)/share/zsh/site-functions"
 # Vim/Nvim
 [[ "$(command -v vim)" ]] && export EDITOR=vim && export VISUAL=vim
 [[ "$(command -v nvim)" ]] && export EDITOR=nvim && export VISUAL=nvim
+# Helix
+[[ "$(command -v hx)" ]] && export EDITOR=hx && export VISUAL=hx
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -128,16 +136,16 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  elif [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+elif [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  else
+else
     echo "zsh-autosuggestions not found"
 fi
 if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-  source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
     source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  else
+else
     echo "zsh-syntax-highlighting not found"
 fi
