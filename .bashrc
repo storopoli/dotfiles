@@ -10,6 +10,13 @@ alias l='ls -CF'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -la'
+# eza
+[[ "$(command -v eza)" ]] &&
+    alias ls='eza' &&
+    alias l='eza' &&
+    alias ll='eza -l' &&
+    alias la='eza -A' &&
+    alias lla='eza -la'
 alias lg=lazygit
 alias testtor="curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip"
 alias testmullvad="curl -Ls am.i.mullvad.net/json | jq"
