@@ -1,0 +1,50 @@
+{
+    "telemetry.telemetryLevel": "off",
+    "window.restoreWindows": "none",
+    "window.titleBarStyle": "custom",
+    "keyboard.dispatch": "keyCode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "explorer.confirmDelete": false,
+    // Git
+    "git.autorefresh": true,
+    "git.autofetch": false,
+    "git.confirmSync": false,
+    "git.enableCommitSigning": true,
+    "[git-commit]": {
+        "editor.rulers": [
+            72,
+            50
+        ],
+        "editor.wordWrap": "off"
+    },
+    "github.gitProtocol": "ssh",
+    "gitlens.telemetry.enabled": false,
+    "gitlens.showWelcomeOnInstall": false,
+    "gitlens.launchpad.indicator.enabled": false,
+    // Vim
+    // To improve performance
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+    // Rust
+    // "rust-analyzer.check.command": "clippy", // maybe this is too costly
+    "rust-analyzer.check.command": "check",
+    "rust-analyzer.checkOnSave": true,
+    // "rust-analyzer.check.features": "all", // maybe this is too costly
+    // Formatters
+    "[rust]": {
+        "editor.rulers": [
+            80
+        ]
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+        "editor.rulers": [
+            80
+        ]
+    }
+}

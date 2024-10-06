@@ -20,7 +20,7 @@ To use these dotfiles, follow these steps:
     cd dotfiles
     ```
 
-3. Run the following command:
+1. Run the following command:
 
     ```bash
     ./install.sh

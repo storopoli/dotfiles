@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # Name the computer
 echo "Setting Computer Name."
@@ -34,8 +35,25 @@ sudo launchctl config user umask 077
 # Command Line Tools for Xcode
 xcode-select --install
 
-# Recurively clone submodules
-git submodule update --init --recursive
+# Set dotfiles
+mkdir -p "$HOME"/.config
+mkdir -p "$HOME"/.ssh
+mkdir -p "$HOME"/.gnupg
+
+cp -r "$PWD"/.config/git "$HOME"/.config/git
+cp -r "$PWD"/.config/Cursor "$HOME"/.config/Cursor
+cp "$PWD"/.zshrc "$HOME"/.zshrc
+cp "$PWD"/.ssh/config "$HOME"/.ssh/config
+cp "$PWD"/.ssh/known_hosts "$HOME"/.ssh/known_hosts
+cp "$PWD"/.gnupg/gpg.conf "$HOME"/.gnupg/gpg.conf
+cp "$PWD"/.gnupg/gpg-agent.conf "$HOME"/.gnupg/gpg-agent.conf
+
+# Set appropriate permissions for SSH and GnuPG files
+chmod 700 "$HOME"/.ssh
+chmod 700 "$HOME"/.gnupg
+chmod 600 "$HOME"/.ssh/config
+chmod 644 "$HOME"/.ssh/known_hosts
+chmod 600 "$HOME"/.gnupg/*
 
 # Install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -65,64 +83,22 @@ brew install \
     git \
     curl \
     rsync \
-    nmap \
-    ffmpeg \
-    bash-completion \
-    zsh-completions \
-    zsh-autosuggestions \
-    zsh-syntax-highlighting \
-    fzf \
-    ripgrep \
-    fd \
     jq \
-    yq \
-    htmlq \
-    yt-dlp \
-    starship \
-    lazygit \
-    gh \
     tor \
-    shellcheck \
     just \
-    zellij \
-    eza \
-    dust \
     hugo \
     gnupg \
     pinentry-mac \
-    ykman \
-    colima \
-    helix \
-    node \
-    deno \
-    yarn \
-    go \
     rustup \
     cargo-nextest \
-    sccache \
-    uv \
-    rye \
     poetry \
-    ruff \
-    pyright \
-    zig \
-    zls \
-    vscode-langservers-extracted \
-    yaml-language-server \
-    taplo \
-    typescript-language-server \
-    marksman \
-    typst \
-    tinymist \
-    typstyle \
-    lua-language-server \
-    bash-language-server \
-    shfmt
+    typst 
 brew services start tor
 
 # brew casks
 echo "Installing Homebrew Casks."
-brew install --cask iterm2
+brew install --cask cursor
+brew install --cask gitkraken
 brew install --cask tor-browser
 brew install --cask keepassxc
 brew install --cask kap
@@ -131,45 +107,26 @@ brew install --cask mullvadvpn
 brew install --cask transmission
 brew install --cask cryptomator
 brew install --cask dangerzone
+brew install --cask libreoffice
 brew install --cask yubico-yubikey-manager
 brew install --cask tailscale
 brew install --cask localsend
+brew install --cask signal
+brew install --cask simplex
+brew install --cask telegram
+brew install --cask whatsapp
 
 # brew fonts
-echo "Installing Homebrew Casks."
+echo "Installing Homebrew Fonts."
 brew install --cask font-monaspace
 
-# Install FZF completions
-"$(brew --prefix)/opt/fzf/install" --all --key-bindings --completion
-
-# Set dotfiles
-mkdir -p "$HOME"/.config
-mkdir -p "$HOME"/.ssh
-mkdir -p "$HOME"/.gnupg
-
-cp -r "$PWD"/.config/git "$HOME"/.config/git
-cp -r "$PWD"/.config/nvim "$HOME"/.config/nvim
-cp -r "$PWD"/.config/helix "$HOME"/.config/helix
-cp -r "$PWD"/.config/zellij "$HOME"/.config/zellij
-cp "$PWD"/.zshrc "$HOME"/.zshrc
-cp "$PWD"/.ssh/config "$HOME"/.ssh/config
-cp "$PWD"/.ssh/known_hosts "$HOME"/.ssh/known_hosts
-cp "$PWD"/.gnupg/gpg.conf "$HOME"/.gnupg/gpg.conf
-cp "$PWD"/.gnupg/gpg-agent.conf "$HOME"/.gnupg/gpg-agent.conf
-
-# Set appropriate permissions for SSH and GnuPG files
-chmod 700 "$HOME"/.ssh
-chmod 700 "$HOME"/.gnupg
-chmod 600 "$HOME"/.ssh/config
-chmod 644 "$HOME"/.ssh/known_hosts
-chmod 600 "$HOME"/.gnupg/*
-
+# pinentry-mac
+echo "Setting pinentry-mac"
 echo "pinentry-program $(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
 
 # rustup
 echo "Installing rustup components"
 rustup default stable
-rustup component add rustfmt rust-analyzer rustc clippy
 
 echo "Done!"
 echo "Don't forget to enable filevault and lockdown mode!"
