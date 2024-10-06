@@ -31,6 +31,9 @@ sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMultica
 echo "Don't allow group/other read access to your stuff"
 sudo launchctl config user umask 077
 
+# Command Line Tools for Xcode
+xcode-select --install
+
 # Recurively clone submodules
 git submodule update --init --recursive
 
@@ -114,9 +117,7 @@ brew install \
     typstyle \
     lua-language-server \
     bash-language-server \
-    shfmt \
-    codespell \
-    tealdeer
+    shfmt
 brew services start tor
 
 # brew casks
