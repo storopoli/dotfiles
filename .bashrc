@@ -28,9 +28,17 @@ function ytp() {
     local playlist_id="$1"
     local yturl="https://www.youtube.com/playlist?list=$playlist_id"
 
-    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
+    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" "$yturl" >command.sh
     chmod +x command.sh
+    # shellcheck disable=SC1091
     . command.sh
+}
+
+# fast parallel grep
+# needs GNU parallel
+# check out: https://stackoverflow.com/questions/9066609/fastest-possible-grep
+fastgrep() {
+    find . -type f | parallel -k -j150% -n 1000 -m grep --color=auto -H -n "$@" {}
 }
 
 rustup-cleanup() {
@@ -39,7 +47,7 @@ rustup-cleanup() {
         return 1
     fi
     # rustup returns an echo saying "no installed toolchains"
-    if $(rustup toolchain list | grep -q 'no installed toolchains'); then
+    if rustup toolchain list | grep -q 'no installed toolchains'; then
         echo "no installed toolchains"
         rustup show
         return 0
@@ -50,13 +58,15 @@ rustup-cleanup() {
 }
 
 # GPG
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export GPG_TTY=$(tty)
+SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export SSH_AUTH_SOCK
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # System binaries
 PATH="/usr/local/bin:$PATH"
 # Local binaries
-if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+if ! [[ "$PATH" =~ $HOME/.local/bin: ]]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 export PATH
@@ -81,6 +91,7 @@ fi
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook bash)"
 
 # rustup
+# shellcheck disable=SC1091
 [[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
 
 # sccache

@@ -2,7 +2,6 @@
 autoload -U colors && colors # Load colors
 autoload -U promptinit
 promptinit
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 stty stop undef # Disable ctrl-s to freeze terminal.
 setopt extendedglob
 
@@ -11,9 +10,9 @@ export LANG=en
 export LC_ALL=en_US.UTF-8
 
 # History
-HISTSIZE=1000000
-HISTFILE=~/.bash_history
-SAVEHIST=1000000
+export HISTSIZE=1000000
+export HISTFILE=~/.bash_history
+export SAVEHIST=1000000
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history
 setopt HIST_IGNORE_DUPS       # Don't record an entry that was just recorded again
 setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate
@@ -67,9 +66,17 @@ function ytp() {
     local playlist_id="$1"
     local yturl="https://www.youtube.com/playlist?list=$playlist_id"
 
-    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" $yturl >command.sh
+    printf "#!/bin/sh\nyt-dlp --add-metadata -i --format mp4 --restrict-filenames --sponsorblock-remove all -o '%%(playlist_index)s-%%(title)s.%%(ext)s' --download-archive archive.txt '%s'" "$yturl" >command.sh
     chmod +x command.sh
+    # shellcheck disable=SC1091
     . command.sh
+}
+
+# fast parallel grep
+# needs GNU parallel
+# check out: https://stackoverflow.com/questions/9066609/fastest-possible-grep
+fastgrep() {
+    find . -type f | parallel -k -j150% -n 1000 -m grep --color=auto -H -n "$@" {}
 }
 
 rustup-cleanup() {
@@ -78,7 +85,7 @@ rustup-cleanup() {
         return 1
     fi
     # rustup returns an echo saying "no installed toolchains"
-    if $(rustup toolchain list | grep -q 'no installed toolchains'); then
+    if rustup toolchain list | grep -q 'no installed toolchains'; then
         echo "no installed toolchains"
         rustup show
         return 0
@@ -90,27 +97,31 @@ rustup-cleanup() {
 
 # brew
 if [ -f /opt/homebrew/bin/brew ]; then
-    brew_prefix=$(/opt/homebrew/bin/brew --prefix)
-    eval "$($brew_prefix/bin/brew shellenv)"
+    brew_prefix="$(/opt/homebrew/bin/brew --prefix)"
+    eval "$("$brew_prefix"/bin/brew shellenv)"
 fi
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_CASK_OPTS=--require-sha
 
 # GPG
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export GPG_TTY=$(tty)
+SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export SSH_AUTH_SOCK
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # System binaries
 PATH="/usr/local/bin:$PATH"
 # Local binaries
-if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+if ! [[ "$PATH" =~ $HOME/.local/bin: ]]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 export PATH
 
 # Zsh functions
-fpath+="$(brew --prefix)/share/zsh/site-functions"
+if [ -f /opt/homebrew/bin/brew ]; then
+    fpath+="$(brew --prefix)/share/zsh/site-functions"
+fi
 
 # Vim/Nvim
 [[ "$(command -v vim)" ]] && export EDITOR=vim && export VISUAL=vim
@@ -119,8 +130,12 @@ fpath+="$(brew --prefix)/share/zsh/site-functions"
 [[ "$(command -v hx)" ]] && export EDITOR=hx && export VISUAL=hx
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+if [ -f ~/.fzf.zsh ]; then
+    # shellcheck disable=SC1091
+    source "$HOME"/.fzf.zsh
+
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+fi
 
 # atuin
 [[ "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
@@ -132,6 +147,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 
 # rustup
+# shellcheck disable=SC1091
 [[ "$(command -v cargo)" ]] && source "$HOME/.cargo/env"
 
 # sccache
@@ -139,15 +155,19 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 # Zsh Plugins
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    # shellcheck disable=SC1091
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 elif [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    # shellcheck disable=SC1091
     source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 else
     echo "zsh-autosuggestions not found"
 fi
 if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    # shellcheck disable=SC1091
     source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    # shellcheck disable=SC1091
     source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 else
     echo "zsh-syntax-highlighting not found"
