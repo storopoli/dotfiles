@@ -125,6 +125,9 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 # atuin
 [[ "$(command -v atuin)" ]] && eval "$(atuin init zsh)"
 
+# starship
+[[ "$(command -v starship)" ]] && eval "$(starship init zsh)"
+
 # direnv
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook zsh)"
 

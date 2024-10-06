@@ -75,6 +75,7 @@ brew install \
     yq \
     htmlq \
     yt-dlp \
+    starship \
     lazygit \
     gh \
     tor \

@@ -74,6 +74,9 @@ fi
 # atuin
 [[ "$(command -v atuin)" ]] && eval "$(atuin init bash)"
 
+# starship
+[[ "$(command -v starship)" ]] && eval "$(starship init bash)"
+
 # direnv
 [[ "$(command -v direnv)" ]] && eval "$(direnv hook bash)"
 
